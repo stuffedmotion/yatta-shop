@@ -1,12 +1,11 @@
 import React from 'react'
 import Cart from '@components/Cart'
-import { Container } from '@utils/styles'
 
 const CartPage = () => (
-  <Container>
+  <div>
     <h1>Cart</h1>
     <Cart />
-  </Container>
+  </div>
 )
 
 export default CartPage

@@ -1,17 +1,10 @@
 import React from 'react'
 import { graphql } from 'gatsby'
+import Image from 'gatsby-image'
 
 import SEO from '@components/seo'
 import ProductForm from '@components/ProductForm'
-import {
-  Img,
-  Container,
-  TwoColumnGrid,
-  GridLeft,
-  GridRight,
-} from '@utils/styles'
 import { ShopifyProduct } from '@typings/storefront'
-import { ProductTitle, ProductDescription } from './styles'
 
 interface ProductPageProps {
   data: {
@@ -24,26 +17,18 @@ const ProductPage = ({ data }: ProductPageProps) => {
   return (
     <>
       <SEO title={product.title} description={product.description} />
-      <Container>
-        <TwoColumnGrid>
-          <GridLeft>
-            {product.images.map(image => (
-              <Img
-                fluid={image.localFile.childImageSharp.fluid}
-                key={image.id}
-                alt={product.title}
-              />
-            ))}
-          </GridLeft>
-          <GridRight>
-            <ProductTitle>{product.title}</ProductTitle>
-            <ProductDescription
-              dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
-            />
-            <ProductForm product={product} />
-          </GridRight>
-        </TwoColumnGrid>
-      </Container>
+      <div>
+        {product.images.map(image => (
+          <Image
+            fluid={image.localFile.childImageSharp.fluid}
+            key={image.id}
+            alt={product.title}
+          />
+        ))}
+        {product.title}
+        <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }} />
+        <ProductForm product={product} />
+      </div>
     </>
   )
 }

@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import { useStaticQuery, graphql, Link } from 'gatsby'
+import Image from 'gatsby-image'
 
 import StoreContext from '@context/StoreContext'
-import { Img } from '@utils/styles'
 import { Query as allShopifyProductQuery } from '@typings/storefront'
 import styles from './styles.module.scss'
 
@@ -64,7 +64,7 @@ const ProductGrid = () => {
             <div className={styles.Product} key={id}>
               <Link to={`/product/${handle}/`}>
                 {firstImage && firstImage.localFile && (
-                  <Img
+                  <Image
                     fluid={firstImage.localFile.childImageSharp.fluid}
                     alt={handle}
                   />

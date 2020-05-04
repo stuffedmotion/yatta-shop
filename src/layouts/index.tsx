@@ -1,44 +1,15 @@
 import React from 'react'
-import { StaticQuery, graphql } from 'gatsby'
-import styled from '@emotion/styled'
-
 import { ContextProvider } from '@context/StoreContext'
-
-import { GlobalStyle } from '@utils/styles'
 import Navigation from '@components/Navigation'
-
-const Wrapper = styled.div`
-  margin: 0 auto;
-  max-width: 960px;
-  padding: 0px 1.0875rem 1.45rem;
-`
+import '@assets/scss/main.scss'
 
 const Layout = ({ children }: any) => (
   <ContextProvider>
-    <GlobalStyle />
-    <StaticQuery
-      query={graphql`
-        query SiteTitleQuery {
-          site {
-            siteMetadata {
-              title
-            }
-          }
-        }
-      `}
-      render={data => (
-        <>
-          <Navigation siteTitle={data.site.siteMetadata.title} />
-          <Wrapper>
-            {children}
-            <footer>
-              © {new Date().getFullYear()}, Built with
-              {` `}
-              <a href="https://www.gatsbyjs.org">Gatsby</a>
-            </footer>
-          </Wrapper>
-        </>
-      )}
+    <Navigation />
+    <div>
+      {children}
+      <footer>© {new Date().getFullYear()}, teehouse shop</footer>
+    </div>
     />
   </ContextProvider>
 )

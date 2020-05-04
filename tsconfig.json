@@ -17,13 +17,15 @@
     ],
     "target": "es2018",
     "paths": {
+      "@assets/*": ["assets/*"],
       "@components/*": ["components/*"],
       "@context/*": ["context/*"],
       "@pages/*": ["pages/*"],
       "@templates/*": ["templates/*"],
       "@typings/*": ["typings/*"],
       "@utils/*": ["utils/*"]
-    }
+    },
+    "resolveJsonModule": true
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.scss", "**/*.js"],
   "exclude": ["node_modules/*", "public/*", "dist/*", ".cache/*"]

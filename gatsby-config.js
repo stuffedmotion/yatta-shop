@@ -16,6 +16,7 @@ module.exports = {
       resolve: `gatsby-plugin-alias-imports`,
       options: {
         alias: {
+          '@assets': `src/assets`,
           '@components': `src/components`,
           '@context': `src/context`,
           '@layouts': `src/layouts`,
@@ -40,7 +41,7 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
-        path: `${__dirname}/src/images`,
+        path: `${__dirname}/src/assets/images`,
       },
     },
     `gatsby-plugin-sass`,
@@ -56,7 +57,7 @@ module.exports = {
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        icon: `src/assets/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
     {
@@ -74,6 +75,9 @@ module.exports = {
         // Storefront API".
         // See: https://help.shopify.com/api/custom-storefronts/storefront-api/getting-started#authentication
         accessToken: process.env.SHOPIFY_ACCESS_TOKEN,
+        apiVersion: `2020-04`,
+
+        paginationSize: 100,
 
         // Set verbose to true to display a verbose output on `npm run develop`
         // or `npm run build`. This prints which nodes are being fetched and how
@@ -94,6 +98,21 @@ module.exports = {
         trackingId: `UA-134421805-1`,
         anonymize: true,
         respectDNT: true,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-prefetch-google-fonts`,
+      options: {
+        fonts: [
+          {
+            family: `Manrope`,
+            variants: [`200`],
+          },
+          {
+            family: `Baloo Bhaina 2`,
+            variants: [`400`, `600`, `700`, `800`],
+          },
+        ],
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
