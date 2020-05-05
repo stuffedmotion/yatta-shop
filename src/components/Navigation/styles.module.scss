@@ -1,21 +1,58 @@
-.header {
-  margin-bottom: 400px;
+@import 'src/assets/scss/variables';
+
+.mast {
+  margin-bottom: 40rem;
   position: relative;
 }
 
 .lottie {
-  height: 361px;
+  height: 36.1rem;
   left: 0;
   position: absolute;
   top: 0;
-  width: 635px;
+  width: 63.5rem;
 }
 
 .logo {
   display: block;
   position: relative;
-  width: 200px;
+  width: 22rem;
   z-index: 2;
-  top: 52px;
-  left: 28px;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 5rem 4rem;
+}
+
+.navigation {
+  align-items: flex-start;
+  display: flex;
+
+  a {
+    color: $color-pink;
+    font-family: 'Baloo Bhaina 2', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-left: 3.5rem;
+    transition: all 0.1s;
+    will-change: color, transform;
+
+    &:hover {
+      color: $color-brown;
+      transform: translate(0, -0.3rem);
+    }
+  }
+}
+
+.active:after {
+  background-color: #f9bbd5;
+  border-radius: 10rem;
+  content: '';
+  display: block;
+  height: 4px;
+  width: 120%;
+  margin-left: -10%;
 }
