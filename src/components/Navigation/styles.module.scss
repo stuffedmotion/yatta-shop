@@ -1,29 +1,73 @@
 @import 'src/assets/scss/variables';
 
-.mast {
+.header {
   margin-bottom: 40rem;
   position: relative;
+
+  @include for-phone-only {
+    background-color: #ea6093;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+  }
 }
 
-.lottie {
+.headerDesktopLottie {
   height: 36.1rem;
   left: 0;
   position: absolute;
   top: 0;
   width: 63.5rem;
+
+  @include hide-phone;
+}
+
+.headerMobileLottie {
+  display: none;
+  left: 0;
+  position: absolute;
+  bottom: -6vw;
+  width: 100vw;
+
+  @include block-phone;
+}
+
+.mobileMenuLottie {
+  height: 5rem;
+  width: 5rem;
+  display: none;
+  flex: none;
+
+  @include block-phone;
 }
 
 .logo {
-  display: block;
+  display: flex;
   position: relative;
   width: 22rem;
+  height: 3.3rem;
   z-index: 2;
+
+  img {
+    width: 100%;
+  }
+
+  @include for-phone-only {
+    padding-right: 3rem;
+    padding-left: 2rem;
+  }
 }
 
 .wrapper {
+  align-items: center;
   display: flex;
   justify-content: space-between;
   padding: 5rem 4rem;
+
+  @include for-phone-only {
+    padding: 1rem 1.5rem 1rem 0.5rem;
+  }
 }
 
 .navigation {
@@ -37,6 +81,7 @@
     font-weight: 700;
     line-height: 1;
     margin-left: 3.5rem;
+    position: relative;
     transition: all 0.1s;
     will-change: color, transform;
 
@@ -45,6 +90,13 @@
       transform: translate(0, -0.3rem);
     }
   }
+
+  @include hide-phone;
+}
+
+.navWrapper {
+  display: flex;
+  align-items: center;
 }
 
 .active:after {
@@ -52,7 +104,54 @@
   border-radius: 10rem;
   content: '';
   display: block;
+  position: absolute;
+  bottom: -5px;
   height: 4px;
   width: 120%;
-  margin-left: -10%;
+  left: -10%;
+}
+
+.cart {
+  background-color: #ea6194;
+  border-radius: 50%;
+  flex: none;
+  height: 2.2rem;
+  margin-left: 4rem;
+  margin-top: -1rem;
+  padding: 1rem;
+  position: relative;
+  width: 2.2rem;
+  z-index: 2;
+
+  img {
+    margin-top: 0.2rem;
+  }
+
+  @include for-phone-only {
+    margin-left: 0;
+    margin-top: 0;
+  }
+}
+
+.quantity {
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 20rem;
+  box-shadow: -1px 2px 0 #efb9cf;
+  color: #754b4e;
+  display: flex;
+  font-family: 'Baloo Bhaina 2', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 0.7;
+  padding: 0.6rem 0.5rem 0.1rem 0.5rem;
+  position: absolute;
+  right: -0.6rem;
+  top: -0.4rem;
+  vertical-align: middle;
+
+  @include for-phone-only {
+    top: 0.2rem;
+    right: -0.1rem;
+  }
 }

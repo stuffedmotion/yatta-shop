@@ -1,2 +1,28 @@
 $color-pink: #ea6194;
 $color-brown: #754b4e;
+
+$phoneWidth: 768px;
+
+@mixin for-phone-only {
+  @media (max-width: $phoneWidth) {
+    @content;
+  }
+}
+
+@mixin hide-phone {
+  @include for-phone-only {
+    display: none;
+  }
+}
+
+@mixin block-phone {
+  @include for-phone-only {
+    display: block;
+  }
+}
+
+@mixin flex-phone {
+  @include for-phone-only {
+    display: flex;
+  }
+}

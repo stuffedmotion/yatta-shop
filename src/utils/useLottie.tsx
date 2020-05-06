@@ -3,7 +3,7 @@ import lottie, { AnimationConfig, AnimationItem } from 'lottie-web'
 import React, { useEffect, useRef, useState } from 'react'
 
 type UseLottieHook = (
-  config: AnimationConfig,
+  config: Partial<AnimationConfig>,
   wrapperProps: React.DetailedHTMLProps<
     React.HTMLAttributes<HTMLDivElement>,
     HTMLDivElement
@@ -19,9 +19,18 @@ const useLottie: UseLottieHook = (config, wrapperProps) => {
   const elem = useRef<HTMLDivElement>()
   const [anim, setAnim] = useState<AnimationItem>(null)
 
+  const defaultConfig = {
+    loop: true,
+    autoplay: true,
+    rendererSettings: {
+      preserveAspectRatio: `xMinYMin slice`,
+    },
+  }
+
   useEffect(() => {
     if (elem.current) {
       const configWithContainer = {
+        ...defaultConfig,
         ...config,
         container: elem.current,
       } as AnimationConfig

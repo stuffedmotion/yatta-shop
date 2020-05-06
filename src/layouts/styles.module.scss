@@ -1,0 +1,8 @@
+@import 'src/assets/scss/variables';
+
+.layout {
+  position: relative;
+  @include for-phone-only {
+    padding-top: calc(7rem + 6vw + 1rem);
+  }
+}
