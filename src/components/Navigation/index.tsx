@@ -1,7 +1,9 @@
+import cx from 'classnames'
 import { Link } from 'gatsby'
 import reduce from 'lodash/reduce'
 import { AnimationConfig } from 'lottie-web'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
+import { useScrollPosition } from 'react-use-scroll-position'
 
 import cart from '@assets/images/cart.svg'
 import headerDesktopAnim from '@assets/lottie/header_desktop.json'
@@ -40,8 +42,13 @@ const mobileMenuConfig = {
 
 const Header = () => {
   const [state, setstate] = useState({ mobileOpen: false, cartOpen: false })
+  const { y: scrollY } = useScrollPosition()
 
-  // Lottie setup
+  useEffect(() => {
+    if (scrollY > 70) document.body.classList.add(`scrolled`)
+    else document.body.classList.remove(`scrolled`)
+  }, [scrollY])
+
   const { Lottie: HeaderDesktopLottie } = useLottie(headerDesktopConfig, {
     className: styles.headerDesktopLottie,
   })
@@ -80,20 +87,23 @@ const Header = () => {
   }
 
   return (
-    <div className={styles.header}>
-      {HeaderDesktopLottie}
-      {HeaderMobileLottie}
-      <div className={styles.wrapper}>
-        {MobileMenuLottie}
-        <Link className={styles.logo} to="/">
-          <img alt="teehouse logo" src={logo} />
-        </Link>
-        <div className={styles.navWrapper}>
-          <Navigation className={styles.navigation} />
-          <CartButton />
+    <>
+      <div className={styles.header}>
+        {HeaderDesktopLottie}
+        {HeaderMobileLottie}
+        <div className={styles.wrapper}>
+          {MobileMenuLottie}
+          <Link className={styles.logo} to="/">
+            <img alt="teehouse logo" src={logo} />
+          </Link>
+          <div className={styles.navWrapper}>
+            <Navigation className={styles.navigation} />
+            <CartButton />
+          </div>
         </div>
       </div>
-    </div>
+      <CartButton className={styles.fixedCart} />
+    </>
   )
 }
 
@@ -109,11 +119,11 @@ const Navigation = ({ className }: { className: string }) => {
   )
 }
 
-const CartButton = () => {
+const CartButton = ({ className }: { className?: string }) => {
   const [hasItems, quantity] = useQuantity()
 
   return (
-    <div className={styles.cart}>
+    <div className={cx(styles.cart, className)}>
       <img alt="cart" src={cart} />
       {hasItems && <div className={styles.quantity}>{quantity}</div>}
     </div>

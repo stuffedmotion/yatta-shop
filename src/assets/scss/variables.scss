@@ -1,7 +1,13 @@
 $color-pink: #ea6194;
 $color-brown: #754b4e;
 
-$phoneWidth: 768px;
+$phoneWidth: 823px;
+
+@mixin for-desktop-only {
+  @media (min-width: $phoneWidth + 1) {
+    @content;
+  }
+}
 
 @mixin for-phone-only {
   @media (max-width: $phoneWidth) {

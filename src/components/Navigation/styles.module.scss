@@ -133,6 +133,21 @@
   }
 }
 
+.fixedCart {
+  position: fixed;
+  top: 3rem;
+  right: 4rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+  will-change: opacity;
+
+  @include hide-phone;
+
+  :global(body.scrolled) & {
+    opacity: 1;
+  }
+}
+
 .quantity {
   align-items: center;
   background-color: #ffffff;
