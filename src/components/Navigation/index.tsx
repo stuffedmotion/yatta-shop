@@ -2,7 +2,13 @@ import cx from 'classnames'
 import { Link } from 'gatsby'
 import reduce from 'lodash/reduce'
 import { AnimationConfig } from 'lottie-web'
-import React, { useContext, useState, useEffect } from 'react'
+import React, {
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+} from 'react'
 import { useScrollPosition } from 'react-use-scroll-position'
 
 import cart from '@assets/images/cart.svg'
@@ -13,6 +19,7 @@ import logo from '@assets/images/teehouse_logo.svg'
 import StoreContext from '@context/StoreContext'
 import useLottie from '@utils/useLottie'
 import styles from './styles.module.scss'
+import { useGlobalMouseDown } from '@utils/useWindowEvent'
 
 const useQuantity = (): [boolean, number] => {
   const {
@@ -41,8 +48,9 @@ const mobileMenuConfig = {
 } as Partial<AnimationConfig>
 
 const Header = () => {
-  const [state, setstate] = useState({ mobileOpen: false, cartOpen: false })
+  const [state, setState] = useState({ mobileOpen: false, cartOpen: false })
   const { y: scrollY } = useScrollPosition()
+  const mobileMenuRef = useRef<HTMLDivElement>()
 
   useEffect(() => {
     if (scrollY > 70) document.body.classList.add(`scrolled`)
@@ -61,19 +69,21 @@ const Header = () => {
     mobileMenuConfig,
     {
       className: styles.mobileMenuLottie,
-      onClick: () => {
+      onClick: e => {
+        e.stopPropagation()
+        e.preventDefault()
         toggleMobileMenu()
       },
     }
   )
 
   const toggleMobileMenu = () => {
-    setstate(prevState => {
+    setState(prevState => {
       const { mobileOpen } = prevState
 
+      animMobileMenu.setSpeed(2.5)
       if (!mobileOpen) {
         animMobileMenu.setDirection(1)
-        animMobileMenu.setSpeed(2.5)
         animMobileMenu.goToAndPlay(30, true)
       } else {
         animMobileMenu.setDirection(-1)
@@ -82,12 +92,23 @@ const Header = () => {
       return {
         ...prevState,
         mobileOpen: !mobileOpen,
+        cartOpen: false,
       }
     })
   }
 
   return (
     <>
+      <div
+        ref={mobileMenuRef}
+        className={cx(styles.mobileMenu, {
+          [styles.active]: state.mobileOpen,
+        })}
+      >
+        <div className={styles.mobileMenuWrapper}>
+          <Navigation className={styles.navigationMobile} />
+        </div>
+      </div>
       <div className={styles.header}>
         {HeaderDesktopLottie}
         {HeaderMobileLottie}
