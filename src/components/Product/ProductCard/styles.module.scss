@@ -1,0 +1,36 @@
+@import 'src/assets/scss/variables';
+
+.card {
+  border-radius: 1.8rem;
+  padding: 2rem;
+  text-decoration: none;
+  background-color: rgba(255, 255, 255, 0.5) !important;
+  box-shadow: 0 12px 17px #f3d2db;
+  transition: all 0.3s;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    transform: scale(1.05) translateY(-1rem);
+    box-shadow: 0 12px 17px #dcafbf;
+  }
+}
+
+.imgWrapper {
+  padding: 2rem 3rem;
+}
+
+.title {
+  color: #404040;
+  font-size: 3rem;
+  font-family: $font-heading;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.price {
+  color: #404040;
+  font-size: 1.5rem;
+  font-family: $font-body;
+  font-weight: 400;
+  letter-spacing: 1px;
+  line-height: 1;
+}

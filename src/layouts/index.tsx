@@ -8,7 +8,7 @@ const Layout = ({ children }: any) => (
   <ContextProvider>
     <div className={styles.layout}>
       <Navigation />
-      <div>
+      <div className={styles.contentWrapper}>
         {children}
         <footer>© {new Date().getFullYear()}, teehouse shop</footer>
       </div>

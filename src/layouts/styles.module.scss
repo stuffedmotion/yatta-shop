@@ -6,3 +6,12 @@
     padding-top: calc(7rem + 6vw + 1rem);
   }
 }
+
+.contentWrapper {
+  box-sizing: border-box;
+  margin: 0 auto;
+  max-width: 130rem;
+  padding: 0 2rem;
+  position: relative;
+  width: 100%;
+}

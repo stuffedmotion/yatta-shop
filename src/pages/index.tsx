@@ -1,17 +1,27 @@
 import React from 'react'
-import { Link } from 'gatsby'
-
+import { useStaticQuery, graphql, Link } from 'gatsby'
+import { Query as allShopifyProductQuery } from '@typings/storefront'
 import SEO from '@components/seo'
-import ProductGrid from '@components/ProductGrid'
+import ProductGrid from '@components/Product/ProductGrid'
 
-const IndexPage = () => (
-  <>
-    <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Shop powered by Gatsby and Shopify.</p>
-    <ProductGrid />
-    <Link to="/page-2/">Go to page 2</Link>
-  </>
-)
+const IndexPage = () => {
+  const { allShopifyProduct }: allShopifyProductQuery = useStaticQuery(
+    graphql`
+      query {
+        allShopifyProduct(sort: { fields: [createdAt], order: DESC }) {
+          ...ProductDetailsAll
+        }
+      }
+    `
+  )
+
+  return (
+    <>
+      <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
+      <ProductGrid products={allShopifyProduct} />
+      <Link to="/page-2/">Go to page 2</Link>
+    </>
+  )
+}
 
 export default IndexPage

@@ -2,13 +2,7 @@ import cx from 'classnames'
 import { Link } from 'gatsby'
 import reduce from 'lodash/reduce'
 import { AnimationConfig } from 'lottie-web'
-import React, {
-  useContext,
-  useState,
-  useEffect,
-  useCallback,
-  useRef,
-} from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { useScrollPosition } from 'react-use-scroll-position'
 
 import cart from '@assets/images/cart.svg'
@@ -16,10 +10,10 @@ import headerDesktopAnim from '@assets/lottie/header_desktop.json'
 import headerMobileAnim from '@assets/lottie/header_mobile.json'
 import mobileMenuAnim from '@assets/lottie/mobile_menu.json'
 import logo from '@assets/images/teehouse_logo.svg'
+import whale from '@assets/images/whale.svg'
 import StoreContext from '@context/StoreContext'
 import useLottie from '@utils/useLottie'
 import styles from './styles.module.scss'
-import { useGlobalMouseDown } from '@utils/useWindowEvent'
 
 const useQuantity = (): [boolean, number] => {
   const {
@@ -50,7 +44,6 @@ const mobileMenuConfig = {
 const Header = () => {
   const [state, setState] = useState({ mobileOpen: false, cartOpen: false })
   const { y: scrollY } = useScrollPosition()
-  const mobileMenuRef = useRef<HTMLDivElement>()
 
   useEffect(() => {
     if (scrollY > 70) document.body.classList.add(`scrolled`)
@@ -99,24 +92,18 @@ const Header = () => {
 
   return (
     <>
-      <div
-        ref={mobileMenuRef}
-        className={cx(styles.mobileMenu, {
-          [styles.active]: state.mobileOpen,
-        })}
-      >
-        <div className={styles.mobileMenuWrapper}>
-          <Navigation className={styles.navigationMobile} />
-        </div>
-      </div>
+      <MobileMenu isOpen={state.mobileOpen} />
       <div className={styles.header}>
         {HeaderDesktopLottie}
         {HeaderMobileLottie}
+
         <div className={styles.wrapper}>
           {MobileMenuLottie}
+
           <Link className={styles.logo} to="/">
             <img alt="teehouse logo" src={logo} />
           </Link>
+
           <div className={styles.navWrapper}>
             <Navigation className={styles.navigation} />
             <CartButton />
@@ -128,17 +115,19 @@ const Header = () => {
   )
 }
 
-const Navigation = ({ className }: { className: string }) => {
-  return (
-    <nav role="main" className={className}>
-      <Link activeClassName={styles.active} to="/">
-        shop
-      </Link>
-      <Link to="/">about</Link>
-      <Link to="/">contact</Link>
-    </nav>
-  )
-}
+const Navigation = ({ className }: { className: string }) => (
+  <nav role="main" className={className}>
+    <Link activeClassName={styles.active} to="/">
+      shop
+    </Link>
+    <Link activeClassName={styles.active} to="/">
+      about
+    </Link>
+    <Link activeClassName={styles.active} to="/">
+      contact
+    </Link>
+  </nav>
+)
 
 const CartButton = ({ className }: { className?: string }) => {
   const [hasItems, quantity] = useQuantity()
@@ -150,5 +139,18 @@ const CartButton = ({ className }: { className?: string }) => {
     </div>
   )
 }
+
+const MobileMenu = ({ isOpen }: { isOpen: boolean }) => (
+  <div
+    className={cx(styles.mobileMenu, {
+      [styles.active]: isOpen,
+    })}
+  >
+    <div className={styles.mobileMenuWrapper}>
+      <Navigation className={styles.navigationMobile} />
+    </div>
+    <img className={styles.whale} src={whale} alt="cute whale" />
+  </div>
+)
 
 export default Header

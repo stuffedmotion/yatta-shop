@@ -36,50 +36,7 @@ const ProductPage = ({ data }: ProductPageProps) => {
 export const query = graphql`
   query($handle: String!) {
     shopifyProduct(handle: { eq: $handle }) {
-      id
-      title
-      handle
-      productType
-      description
-      descriptionHtml
-      shopifyId
-      options {
-        id
-        name
-        values
-      }
-      variants {
-        id
-        title
-        price
-        availableForSale
-        shopifyId
-        selectedOptions {
-          name
-          value
-        }
-      }
-      priceRange {
-        minVariantPrice {
-          amount
-          currencyCode
-        }
-        maxVariantPrice {
-          amount
-          currencyCode
-        }
-      }
-      images {
-        originalSrc
-        id
-        localFile {
-          childImageSharp {
-            fluid(maxWidth: 910) {
-              ...GatsbyImageSharpFluid_withWebp_tracedSVG
-            }
-          }
-        }
-      }
+      ...ProductDetails
     }
   }
 `
