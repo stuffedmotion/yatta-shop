@@ -5,6 +5,7 @@ import { Link } from 'gatsby'
 import Image from 'gatsby-image'
 import { getPrice } from '@utils/helpers'
 import styles from './styles.module.scss'
+import posed from 'react-pose'
 
 interface ProductCardProps {
   product: ShopifyProduct
@@ -20,23 +21,20 @@ export const ProductCard = ({ product }: ProductCardProps) => {
     metafields,
   } = product
   return (
-    <Link
-      to={`/product/${handle}/`}
-      className={styles.card}
-      style={{ backgroundColor: getMetafield(`color`, metafields) }}
-      key={id}
-    >
-      {firstImage && firstImage.localFile && (
-        <div className={styles.imgWrapper}>
-          <Image
-            fluid={firstImage.localFile.childImageSharp.fluid}
-            alt={handle}
-          />
-        </div>
-      )}
+    <div className={styles.card}>
+      <Link to={`/product/${handle}/`} key={id}>
+        {firstImage && firstImage.localFile && (
+          <div className={styles.imgWrapper}>
+            <Image
+              fluid={firstImage.localFile.childImageSharp.fluid}
+              alt={handle}
+            />
+          </div>
+        )}
 
-      <div className={styles.title}>{title}</div>
-      <div className={styles.price}>{getPrice(firstVariant.price)}</div>
-    </Link>
+        <div className={styles.title}>{title}</div>
+        <div className={styles.price}>{getPrice(firstVariant.price)}</div>
+      </Link>
+    </div>
   )
 }

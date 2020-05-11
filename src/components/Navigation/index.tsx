@@ -117,10 +117,10 @@ const Header = () => {
 
 const Navigation = ({ className }: { className: string }) => (
   <nav role="main" className={className}>
-    <Link activeClassName={styles.active} to="/">
+    <Link activeClassName={styles.active} to="/product/salt/">
       shop
     </Link>
-    <Link activeClassName={styles.active} to="/">
+    <Link activeClassName={styles.active} to="/product/unicorn-t-shirt/">
       about
     </Link>
     <Link activeClassName={styles.active} to="/">

@@ -6,7 +6,8 @@
   text-decoration: none;
   background-color: rgba(255, 255, 255, 0.5) !important;
   box-shadow: 0 12px 17px #f3d2db;
-  transition: all 0.3s;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  will-change: background-color, transform, box-shadow;
   &:hover {
     background-color: rgba(255, 255, 255, 0.8) !important;
     transform: scale(1.05) translateY(-1rem);
