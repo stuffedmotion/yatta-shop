@@ -14,6 +14,7 @@ import whale from '@assets/images/whale.svg'
 import StoreContext from '@context/StoreContext'
 import useLottie from '@utils/useLottie'
 import styles from './styles.module.scss'
+import posed from 'react-pose'
 
 const useQuantity = (): [boolean, number] => {
   const {
@@ -140,6 +141,24 @@ const CartButton = ({ className }: { className?: string }) => {
   )
 }
 
+const Transition = posed.img({
+  visible: {
+    opacity: 1,
+    y: 0,
+    delay: 200,
+    transition: {
+      y: { type: 'spring', stiffness: 200, damping: 15 },
+      opacity: { ease: 'easeOut', duration: 300 },
+      default: { duration: 300 },
+    },
+  },
+  hidden: {
+    opacity: 0,
+    y: 200,
+    transition: { duration: 400 },
+  },
+})
+
 const MobileMenu = ({ isOpen }: { isOpen: boolean }) => (
   <div
     className={cx(styles.mobileMenu, {
@@ -149,7 +168,12 @@ const MobileMenu = ({ isOpen }: { isOpen: boolean }) => (
     <div className={styles.mobileMenuWrapper}>
       <Navigation className={styles.navigationMobile} />
     </div>
-    <img className={styles.whale} src={whale} alt="cute whale" />
+    <Transition
+      pose={isOpen ? 'visible' : 'hidden'}
+      className={styles.whale}
+      src={whale}
+      alt="cute whale"
+    />
   </div>
 )
 
