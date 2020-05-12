@@ -4,6 +4,7 @@ import { ShopifyProductConnection } from '@typings/storefront'
 import styles from './styles.module.scss'
 import { ProductCard } from '../ProductCard'
 import posed from 'react-pose'
+import { TRANSITION_DURATION } from '@utils/helpers'
 
 interface ProductGridProps {
   products: ShopifyProductConnection
@@ -12,20 +13,17 @@ interface ProductGridProps {
 const Transition = posed.div({
   enter: {
     opacity: 1,
-    y: `0px`,
+    y: 0,
     transition: {
-      ease: 'anticipate',
-      duration: 400,
-      // delay: 100,
+      y: { type: 'spring', stiffness: 500, damping: 15 },
+      opacity: { ease: 'easeOut', duration: 800 },
+      default: { duration: 200 },
     },
   },
   exit: {
     opacity: 0,
-    y: `40px`,
-    transition: {
-      ease: 'anticipate',
-      duration: 400,
-    },
+    y: 20,
+    transition: { duration: 0 },
   },
 })
 
@@ -48,8 +46,8 @@ const ProductGrid = ({ products }: ProductGridProps) => {
     : []
   return (
     <Transition className={styles.grid}>
-      {newArray.map(({ node }, idx) => (
-        <ProductCard key={idx} product={node} />
+      {newArray.map(({ node }) => (
+        <ProductCard key={node.handle} product={node} />
       ))}
     </Transition>
   )

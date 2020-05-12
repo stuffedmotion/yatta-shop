@@ -8,10 +8,20 @@
   box-shadow: 0 12px 17px #f3d2db;
   transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
   will-change: background-color, transform, box-shadow;
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.8) !important;
-    transform: scale(1.05) translateY(-1rem);
-    box-shadow: 0 12px 17px #dcafbf;
+
+  @include for-desktop-only {
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.8) !important;
+      transform: scale(1.05) translateY(-1rem);
+      box-shadow: 0 17px 17px #dcafbf;
+    }
+  }
+  @include for-phone-only {
+    &:active {
+      background-color: rgba(255, 255, 255, 0.8) !important;
+      transform: scale(1.05);
+      box-shadow: 0 12px 17px #dcafbf;
+    }
   }
 }
 

@@ -3,7 +3,7 @@ import { getMetafield } from '@utils/getMetafield'
 import { ShopifyProduct } from '@typings/storefront'
 import { Link } from 'gatsby'
 import Image from 'gatsby-image'
-import { getPrice } from '@utils/helpers'
+import { getPrice, TRANSITION_DURATION } from '@utils/helpers'
 import styles from './styles.module.scss'
 import posed from 'react-pose'
 

@@ -4,12 +4,6 @@ import Navigation from '@components/Navigation'
 import Transition from '@components/Transition'
 import '@assets/scss/main.scss'
 import styles from './styles.module.scss'
-import posed from 'react-pose'
-
-const Footer = posed.div({
-  enter: { opacity: 1 },
-  exit: { opacity: 0 },
-})
 
 const Layout = ({ children, location }: any) => (
   <ContextProvider>

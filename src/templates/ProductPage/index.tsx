@@ -16,27 +16,24 @@ interface ProductPageProps {
 const Transition = posed.div({
   enter: {
     opacity: 1,
-    // y: `0px`,
+    y: 0,
     transition: {
-      ease: 'linear',
-      duration: 100,
-      // delay: 100,
+      y: { type: 'spring', stiffness: 400, damping: 15 },
+      opacity: { ease: 'easeOut', duration: 800 },
+      default: { duration: 300 },
     },
   },
   exit: {
     opacity: 0,
-    // y: `40px`,
-    transition: {
-      ease: 'linear',
-      duration: 100,
-    },
+    y: 40,
+    transition: { duration: 0 },
   },
 })
 
 const ProductPage = ({ data }: ProductPageProps) => {
   const product = data.shopifyProduct
   return (
-    <>
+    <Transition>
       <SEO title={product.title} description={product.description} />
       <div>
         {product.images.map(image => (
@@ -51,7 +48,7 @@ const ProductPage = ({ data }: ProductPageProps) => {
         <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }} />
         <ProductForm product={product} />
       </div>
-    </>
+    </Transition>
   )
 }
 
