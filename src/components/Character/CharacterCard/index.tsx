@@ -10,12 +10,12 @@ interface CharacterCardProps {
 }
 
 export const CharacterCard = ({ collection }: CharacterCardProps) => {
-  const { id, handle, image } = collection
+  const { handle, image } = collection
   const title = formatCharacterTitle(collection.title)
 
   return (
     <div className={styles.card}>
-      <Link to={`/character/${handle}/`} key={id}>
+      <Link to={`/character/${handle}/`} key={handle}>
         {image && image.localFile && (
           <div className={styles.imgWrapper}>
             <Image fluid={image.localFile.childImageSharp.fluid} alt={handle} />

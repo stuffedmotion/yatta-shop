@@ -21,13 +21,11 @@ export const COLLECTION_DETAILS_FRAGMENT_ALL = graphql`
 `
 export const PRODUCT_DETAILS_FRAGMENT = graphql`
   fragment ProductDetails on ShopifyProduct {
-    id
     title
     handle
     productType
     description
     descriptionHtml
-    shopifyId
     metafields {
       key
       value
@@ -38,7 +36,6 @@ export const PRODUCT_DETAILS_FRAGMENT = graphql`
       values
     }
     variants {
-      id
       title
       price
       availableForSale
@@ -73,12 +70,10 @@ export const PRODUCT_DETAILS_FRAGMENT = graphql`
 `
 export const COLLECTION_DETAILS_FRAGMENT = graphql`
   fragment CollectionDetails on ShopifyCollection {
-    id
     title
     handle
     description
     descriptionHtml
-    shopifyId
     image {
       id
       localFile {

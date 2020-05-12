@@ -2,10 +2,10 @@ import React from 'react'
 
 import { ShopifyProductConnection } from '@typings/storefront'
 import posed from 'react-pose'
-import styles from './styles.module.scss'
 import { ProductCard } from '@components/Product/ProductCard'
+import styles from './styles.module.scss'
 
-interface CharacterGridProps {
+interface ProductGridProps {
   products: ShopifyProductConnection
 }
 
@@ -26,7 +26,7 @@ const Transition = posed.div({
   },
 })
 
-const CharacterGrid = ({ products }: CharacterGridProps) => {
+const ProductGrid = ({ products }: ProductGridProps) => {
   const newArray = products.edges
     ? [
         products.edges[0],
@@ -52,4 +52,4 @@ const CharacterGrid = ({ products }: CharacterGridProps) => {
   )
 }
 
-export default CharacterGrid
+export default ProductGrid

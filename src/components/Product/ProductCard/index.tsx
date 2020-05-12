@@ -12,7 +12,6 @@ interface ProductCardProps {
 
 export const ProductCard = ({ product }: ProductCardProps) => {
   const {
-    id,
     handle,
     title,
     images: [firstImage],
@@ -21,7 +20,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   } = product
   return (
     <div className={styles.card}>
-      <Link to={`/product/${handle}/`} key={id}>
+      <Link to={`/product/${handle}/`} key={handle}>
         {firstImage && firstImage.localFile && (
           <div className={styles.imgWrapper}>
             <Image
