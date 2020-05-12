@@ -9,6 +9,16 @@ export const PRODUCT_DETAILS_FRAGMENT_ALL = graphql`
     }
   }
 `
+
+export const COLLECTION_DETAILS_FRAGMENT_ALL = graphql`
+  fragment CollectionDetailsAll on ShopifyCollectionConnection {
+    edges {
+      node {
+        ...CollectionDetails
+      }
+    }
+  }
+`
 export const PRODUCT_DETAILS_FRAGMENT = graphql`
   fragment ProductDetails on ShopifyProduct {
     id
@@ -58,6 +68,29 @@ export const PRODUCT_DETAILS_FRAGMENT = graphql`
           }
         }
       }
+    }
+  }
+`
+export const COLLECTION_DETAILS_FRAGMENT = graphql`
+  fragment CollectionDetails on ShopifyCollection {
+    id
+    title
+    handle
+    description
+    descriptionHtml
+    shopifyId
+    image {
+      id
+      localFile {
+        childImageSharp {
+          fluid(maxWidth: 800) {
+            ...GatsbyImageSharpFluid_noBase64
+          }
+        }
+      }
+    }
+    products {
+      ...ProductDetails
     }
   }
 `

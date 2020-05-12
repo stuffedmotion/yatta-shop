@@ -3,9 +3,8 @@ import { getMetafield } from '@utils/getMetafield'
 import { ShopifyProduct } from '@typings/storefront'
 import { Link } from 'gatsby'
 import Image from 'gatsby-image'
-import { getPrice, TRANSITION_DURATION } from '@utils/helpers'
+import { getPrice } from '@utils/helpers'
 import styles from './styles.module.scss'
-import posed from 'react-pose'
 
 interface ProductCardProps {
   product: ShopifyProduct
@@ -33,7 +32,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         )}
 
         <div className={styles.title}>{title}</div>
-        <div className={styles.price}>{getPrice(firstVariant.price)}</div>
+        {/* <div className={styles.price}>{getPrice(firstVariant.price)}</div> */}
       </Link>
     </div>
   )

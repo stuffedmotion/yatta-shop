@@ -1,1 +1,3 @@
 src/types/storefront.ts
+gatsby-node.js
+src/pages/index.tsx

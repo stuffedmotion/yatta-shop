@@ -1,16 +1,18 @@
 import React from 'react'
-import { useStaticQuery, graphql, Link } from 'gatsby'
-import { Query as allShopifyProductQuery } from '@typings/storefront'
+import { useStaticQuery, graphql } from 'gatsby'
+import { Query as allShopifyCollectionQuery } from '@typings/storefront'
 import SEO from '@components/seo'
-import ProductGrid from '@components/Product/ProductGrid'
-import posed from 'react-pose'
+import CharacterGrid from '@components/Character/CharacterGrid'
 
 const IndexPage = () => {
-  const { allShopifyProduct }: allShopifyProductQuery = useStaticQuery(
+  const { allShopifyCollection }: allShopifyCollectionQuery = useStaticQuery(
     graphql`
       query {
-        allShopifyProduct(sort: { fields: [createdAt], order: DESC }) {
-          ...ProductDetailsAll
+        allShopifyCollection(
+          filter: {title: {regex: "/\\bCharacter\\b/"}}
+          sort: { fields: title, order: DESC }
+        ) {
+          ...CollectionDetailsAll
         }
       }
     `
@@ -18,9 +20,8 @@ const IndexPage = () => {
 
   return (
     <>
-      <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
-      <ProductGrid products={allShopifyProduct} />
-      <Link to="/page-2/">Go to page 2</Link>
+      <SEO title="teehouse" keywords={[`cute`, `t-shirts`, `animals`]} />
+      <CharacterGrid collections={allShopifyCollection} />
     </>
   )
 }

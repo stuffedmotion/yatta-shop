@@ -3,7 +3,7 @@ import { graphql } from 'gatsby'
 import Image from 'gatsby-image'
 
 import SEO from '@components/seo'
-import ProductForm from '@components/ProductForm'
+import ProductForm from '@components/Product/ProductForm'
 import { ShopifyProduct } from '@typings/storefront'
 import posed from 'react-pose'
 
@@ -18,8 +18,8 @@ const Transition = posed.div({
     opacity: 1,
     y: 0,
     transition: {
-      y: { type: 'spring', stiffness: 400, damping: 15 },
-      opacity: { ease: 'easeOut', duration: 800 },
+      y: { type: `spring`, stiffness: 400, damping: 15 },
+      opacity: { ease: `easeOut`, duration: 800 },
       default: { duration: 300 },
     },
   },
@@ -46,7 +46,7 @@ const ProductPage = ({ data }: ProductPageProps) => {
         ))}
         {product.title}
         <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }} />
-        <ProductForm product={product} />
+        {/* <ProductForm product={product} /> */}
       </div>
     </Transition>
   )
