@@ -18,21 +18,29 @@ export const ProductCard = ({ product }: ProductCardProps) => {
     variants: [firstVariant],
     metafields,
   } = product
+
   return (
-    <div className={styles.card}>
-      <Link to={`/product/${handle}/`} key={handle}>
-        {firstImage && firstImage.localFile && (
-          <div className={styles.imgWrapper}>
-            <Image
-              fluid={firstImage.localFile.childImageSharp.fluid}
-              alt={handle}
-            />
+    <Link className={styles.card} to={`/product/${handle}/`} key={handle}>
+      {firstImage && firstImage.localFile && (
+        <Image
+          className={styles.image}
+          fluid={firstImage.localFile.childImageSharp.fluid}
+          alt={handle}
+        />
+      )}
+
+      <div className={styles.title}>
+        {title}
+        {firstVariant.compareAtPrice && <div className={styles.sale}>sale</div>}
+      </div>
+      <div className={styles.priceWrapper}>
+        {firstVariant.compareAtPrice && (
+          <div className={styles.compareAtPrice}>
+            {getPrice(firstVariant.compareAtPrice)}
           </div>
         )}
-
-        <div className={styles.title}>{title}</div>
-        {/* <div className={styles.price}>{getPrice(firstVariant.price)}</div> */}
-      </Link>
-    </div>
+        <div className={styles.price}>{getPrice(firstVariant.price)}</div>
+      </div>
+    </Link>
   )
 }

@@ -1,3 +1,4 @@
+/* eslint-disable  */
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -12,7 +13,7 @@ export default function HTML(props) {
           content="height=device-height,
                       width=device-width, initial-scale=1.0,
                       minimum-scale=1.0, maximum-scale=1.0,
-                      user-scalable=no, target-densitydpi=device-dpi"
+                      user-scalable=no"
         />
         {props.headComponents}
       </head>

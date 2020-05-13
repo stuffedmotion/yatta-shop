@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'gatsby'
 import Image from 'gatsby-image'
-import { formatCharacterTitle } from '@utils/helpers'
+import { formatCollectionTitle } from '@utils/helpers'
 import { ShopifyCollection } from '@typings/storefront'
 import styles from './styles.module.scss'
 
@@ -11,7 +11,7 @@ interface CharacterCardProps {
 
 export const CharacterCard = ({ collection }: CharacterCardProps) => {
   const { handle, image } = collection
-  const title = formatCharacterTitle(collection.title)
+  const { title } = formatCollectionTitle(collection.title)
 
   return (
     <div className={styles.card}>

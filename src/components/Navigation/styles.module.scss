@@ -184,6 +184,8 @@
   will-change: transform;
   width: 100vw;
   z-index: 2;
+
+  @include hide-desktop;
 }
 
 .mobileMenu.active {

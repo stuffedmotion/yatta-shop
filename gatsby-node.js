@@ -43,7 +43,7 @@ exports.createPages = async ({ graphql, actions }) => {
   `)
 
   collections.data.allShopifyCollection.edges.forEach(({ node }) => {
-    if(node.title.includes(`Character - `))
+    if(node.title.includes(`Character-`))
       createPage({
         path: `/character/${node.handle}`,
         component: path.resolve(`./src/templates/CharacterPage/index.tsx`),

@@ -5,7 +5,9 @@ import Image from 'gatsby-image'
 import SEO from '@components/seo'
 import { ShopifyCollection } from '@typings/storefront'
 import posed from 'react-pose'
-import { formatCharacterTitle } from '@utils/helpers'
+import { formatCollectionTitle } from '@utils/helpers'
+import ProductGrid from '@components/Product/ProductGrid'
+import styles from './styles.module.scss'
 
 interface CharacterPageProps {
   data: {
@@ -31,22 +33,36 @@ const Transition = posed.div({
 })
 
 const CharacterPage = ({ data }: CharacterPageProps) => {
-  const { description, descriptionHtml, image } = data.shopifyCollection
-  const title = formatCharacterTitle(data.shopifyCollection.title)
+  const { description, image, products } = data.shopifyCollection
+  const { title, subtitle } = formatCollectionTitle(
+    data.shopifyCollection.title
+  )
 
   return (
     <Transition>
       <SEO title={title} description={description} />
-      <div>
-        <Image
-          fluid={image.localFile.childImageSharp.fluid}
-          key={image.id}
-          alt={title}
-          style={{ height: `200px` }}
-        />
-        {title}
-        <div dangerouslySetInnerHTML={{ __html: descriptionHtml }} />
+
+      <div className={styles.bioWrapper}>
+        <div className={styles.bio}>
+          <div className={styles.bioFlex}>
+            <Image
+              className={styles.bioImage}
+              fluid={image.localFile.childImageSharp.fluid}
+              key={image.id}
+              alt={title}
+            />
+
+            <div className={styles.bioInfo}>
+              <h1>{title}</h1>
+              <h2>{subtitle}</h2>
+              <div className={styles.desc}>{description}</div>
+            </div>
+          </div>
+          <div className={styles.descMobile}>{description}</div>
+        </div>
       </div>
+
+      <ProductGrid title="what's available" products={products} />
     </Transition>
   )
 }

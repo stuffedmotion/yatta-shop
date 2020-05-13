@@ -24,6 +24,12 @@ $phoneWidth: 823px;
   }
 }
 
+@mixin hide-desktop {
+  @include for-desktop-only {
+    display: none;
+  }
+}
+
 @mixin block-phone {
   @include for-phone-only {
     display: block;

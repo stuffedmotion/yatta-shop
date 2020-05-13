@@ -40,6 +40,7 @@ export const PRODUCT_DETAILS_FRAGMENT = graphql`
       price
       availableForSale
       shopifyId
+      compareAtPrice
       selectedOptions {
         name
         value

@@ -55,9 +55,13 @@ const Header = () => {
     className: styles.headerDesktopLottie,
   })
 
-  const { Lottie: HeaderMobileLottie } = useLottie(headerMobileConfig, {
-    className: styles.headerMobileLottie,
-  })
+  const { Lottie: HeaderMobileLottie, anim: animHeaderMobile } = useLottie(
+    headerMobileConfig,
+    {
+      className: styles.headerMobileLottie,
+    }
+  )
+  if (animHeaderMobile) animHeaderMobile.setSpeed(3)
 
   const { Lottie: MobileMenuLottie, anim: animMobileMenu } = useLottie(
     mobileMenuConfig,

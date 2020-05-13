@@ -110,7 +110,7 @@ module.exports = {
           },
           {
             family: `Baloo Bhaina 2`,
-            variants: [`400`, `600`, `700`, `800`],
+            variants: [`400`, `700`, `800`],
           },
         ],
       },
