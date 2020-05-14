@@ -1,0 +1,14 @@
+{
+  "version": "v1",
+  "packages": {
+    "react-slick": {
+      "signature": "f4a567d1f7e61538fa6be9190e70df38",
+      "file": true,
+      "replaced": "^0.26.1"
+    },
+    "react-slick-teehouse": {
+      "signature": "6e2203b4e6d484e32e1763e87745517c",
+      "file": true
+    }
+  }
+}

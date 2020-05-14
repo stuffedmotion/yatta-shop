@@ -6,6 +6,10 @@
   justify-content: space-between;
   max-width: 118rem;
   margin: 0 auto;
+
+  @include for-phone-only {
+    flex-direction: column;
+  }
 }
 
 .titles {
@@ -15,9 +19,13 @@
 }
 
 .left {
-  width: 40%;
+  @include for-desktop-only {
+    width: 40%;
+  }
 }
 
 .right {
-  width: 43%;
+  @include for-desktop-only {
+    width: 43%;
+  }
 }

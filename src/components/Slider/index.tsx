@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import cx from 'classnames'
 import { ShopifyProductImages } from '@typings/storefront'
-import React, { useContext, useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Image from 'gatsby-image'
-import Slick, { Settings } from 'react-slick'
+import Slick, { Settings } from 'react-slick-teehouse'
 import styles from './styles.module.scss'
 
 interface SliderProps {
@@ -13,20 +13,31 @@ interface SliderProps {
 
 const Slider = ({ images, altText }: SliderProps) => {
   const [slideIndex, setSlideIndex] = useState(0)
-
   const sliderRef = useRef(null)
 
-  useEffect(() => {}, [])
+  useEffect(() => {
+    const timer = setTimeout(() => goToSlide(slideIndex), 20)
+    return () => clearTimeout(timer)
+  }, [slideIndex])
 
   const slickConfig = {
     dots: false,
     infinite: false,
-    speed: 300,
+    speed: 250,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
-    beforeChange: (current, next) => setSlideIndex(next),
+    afterChange: newId => {
+      setSlideIndex(newId)
+    },
   } as Settings
+
+  const goToSlide = (id: number) => {
+    if (sliderRef) {
+      setSlideIndex(id)
+      sliderRef.current.slickGoTo(id)
+    }
+  }
 
   return (
     <div className={styles.slider}>
@@ -42,15 +53,19 @@ const Slider = ({ images, altText }: SliderProps) => {
       </Slick>
       <div className={styles.imagePicker}>
         {images.slice(0, 5).map((image, idx) => (
-          <Image
+          <button
             className={cx(styles.smallImage, {
               [styles.active]: idx === slideIndex,
             })}
-            fluid={image.localFile.childImageSharp.fluid}
-            key={image.id}
-            alt={altText}
-            onClick={() => set}
-          />
+            type="button"
+            onClick={() => goToSlide(idx)}
+          >
+            <Image
+              fluid={image.localFile.childImageSharp.fluid}
+              key={image.id}
+              alt={altText}
+            />
+          </button>
         ))}
       </div>
     </div>
