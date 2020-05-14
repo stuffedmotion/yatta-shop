@@ -1,6 +1,28 @@
-.slider {
-  line-height: 0;
+@import 'src/assets/scss/variables';
+
+.slick {
+  background-color: #ea6093;
   border-radius: 1.8rem;
   border: 7px solid white;
+  line-height: 0;
   overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.imagePicker {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.smallImage {
+  border-radius: 1.8rem;
+  border: 4px solid rgba(255, 255, 255, 0);
+  line-height: 0;
+}
+
+.active {
+  border: 4px solid $color-pink;
 }
