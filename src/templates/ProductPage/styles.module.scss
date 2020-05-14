@@ -1,0 +1,26 @@
+@import 'src/assets/scss/variables';
+@import 'src/assets/scss/typography';
+
+.productWrapper {
+  display: flex;
+  justify-content: space-between;
+  max-width: 118rem;
+  margin: 0 auto;
+}
+
+.titles {
+  h2 {
+    @extend .th_subtitle;
+  }
+}
+
+.sliderImage {
+}
+
+.left {
+  width: 40%;
+}
+
+.right {
+  width: 43%;
+}

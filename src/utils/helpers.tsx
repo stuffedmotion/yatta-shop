@@ -1,4 +1,3 @@
-/* eslint-disable no-plusplus */
 export const getPrice = (price: string) =>
   Intl.NumberFormat(`en-US`, {
     currency: `USD`,

@@ -27,25 +27,9 @@ const Transition = posed.div({
 })
 
 const CharacterGrid = ({ collections }: CharacterGridProps) => {
-  const newArray = collections.edges
-    ? [
-        collections.edges[0],
-        collections.edges[1],
-        collections.edges[0],
-        collections.edges[1],
-        collections.edges[0],
-        collections.edges[1],
-        collections.edges[0],
-        collections.edges[1],
-        collections.edges[0],
-        collections.edges[1],
-        collections.edges[0],
-        collections.edges[1],
-      ]
-    : []
   return (
     <Transition className={styles.grid}>
-      {newArray.map(({ node }) => (
+      {collections.edges.map(({ node }) => (
         <CharacterCard key={node.handle} collection={node} />
       ))}
     </Transition>
