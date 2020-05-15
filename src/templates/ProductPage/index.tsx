@@ -5,6 +5,7 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
 import SEO from '@components/seo'
+import ProductOption from '@components/Product/ProductOption'
 import ProductForm from '@components/Product/ProductForm'
 import { ShopifyProduct } from '@typings/storefront'
 import Slider from '@components/Slider'
@@ -58,17 +59,13 @@ const ProductPage = ({ data }: ProductPageProps) => {
               back to shop
             </Link>
           </div>
-          {product.variants.map(variant => (
-            <button
-              type="button"
-              onClick={() => {
-                if (sliderRef) sliderRef.current.goToImageId(variant.image?.id)
-              }}
-              className={styles.variantColor}
-            >
-              {variant.title} |{' '}
-              {getMetafield(`variant_color`, variant.metafields)}
-            </button>
+          {product.options.map(option => (
+            <ProductOption
+              key={option.id}
+              sliderRef={sliderRef}
+              option={option}
+              product={product}
+            />
           ))}
         </div>
 

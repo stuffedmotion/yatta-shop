@@ -49,12 +49,6 @@ const ProductForm = ({ product }: ProductFormProps) => {
   //   checkAvailability(product.shopifyId)
   // }, [productVariant, checkAvailability, product.shopifyId])
 
-  const handleQuantityChange = ({
-    target,
-  }: React.ChangeEvent<HTMLInputElement>) => {
-    setQuantity(parseInt(target.value, 10))
-  }
-
   const handleOptionChange = (
     optionIndex: number,
     { target }: React.ChangeEvent<HTMLSelectElement>
@@ -131,16 +125,6 @@ const ProductForm = ({ product }: ProductFormProps) => {
           <br />
         </React.Fragment>
       ))}
-      <label htmlFor="quantity">Quantity </label>
-      <input
-        type="number"
-        id="quantity"
-        name="quantity"
-        min="1"
-        step="1"
-        onChange={handleQuantityChange}
-        value={quantity}
-      />
       <br />
       <button
         type="submit"

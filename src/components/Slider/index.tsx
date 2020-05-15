@@ -31,6 +31,7 @@ const Slider: React.SFC<SliderProps> = forwardRef(
     const slickConfig = {
       dots: false,
       infinite: false,
+      lazyLoad: `progressive`,
       speed: 300,
       slidesToShow: 1,
       slidesToScroll: 1,
@@ -76,6 +77,7 @@ const Slider: React.SFC<SliderProps> = forwardRef(
         <div className={styles.imagePicker}>
           {images.slice(0, 5).map((image, idx) => (
             <button
+              key={image.id}
               className={cx(styles.smallImage, {
                 [styles.active]: idx === slideIndex,
               })}

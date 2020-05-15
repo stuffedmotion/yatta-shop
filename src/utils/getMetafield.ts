@@ -1,7 +1,7 @@
 import { ShopifyProductMetafield } from '@typings/storefront'
 
 const META_DEFAULTS = {
-  variant_color: `#FF0000`,
+  product_colors: JSON.stringify({}),
 } as any
 
 export const getMetafield = (
