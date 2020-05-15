@@ -1,0 +1,34 @@
+@import 'src/assets/scss/variables';
+
+.colorOption {
+  display: flex;
+}
+
+.color {
+  align-items: center;
+  color: #826266;
+  cursor: pointer;
+  display: flex;
+  font-size: 1.5rem;
+  flex-direction: column;
+  margin-right: 1.5rem;
+}
+
+.colorBox {
+  background-origin: border-box;
+  border-radius: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  height: 3.4rem;
+  margin-bottom: 0.3rem;
+  transition: border 0.2s;
+  will-change: border;
+  width: 4rem;
+
+  .color:hover & {
+    border: 2px solid white;
+  }
+
+  .active & {
+    border: 2px solid $color-pink !important;
+  }
+}
