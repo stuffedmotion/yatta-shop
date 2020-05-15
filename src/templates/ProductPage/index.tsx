@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { graphql, Link } from 'gatsby'
 import posed from 'react-pose'
 import 'slick-carousel/slick/slick.css'
@@ -7,8 +7,9 @@ import 'slick-carousel/slick/slick-theme.css'
 import SEO from '@components/seo'
 import ProductForm from '@components/Product/ProductForm'
 import { ShopifyProduct } from '@typings/storefront'
-import styles from './styles.module.scss'
 import Slider from '@components/Slider'
+import { getMetafield } from '@utils/getMetafield'
+import styles from './styles.module.scss'
 
 interface ProductPageProps {
   data: {
@@ -35,12 +36,17 @@ const Transition = posed.div({
 
 const ProductPage = ({ data }: ProductPageProps) => {
   const product = data.shopifyProduct
+  const sliderRef = useRef(null)
   return (
     <Transition>
       <SEO title={product.title} description={product.description} />
       <div className={styles.productWrapper}>
         <div className={styles.left}>
-          <Slider images={product.images} altText={product.title} />
+          <Slider
+            ref={sliderRef}
+            images={product.images}
+            altText={product.title}
+          />
         </div>
         <div className={styles.right}>
           <div className={styles.titleArea}>
@@ -52,6 +58,18 @@ const ProductPage = ({ data }: ProductPageProps) => {
               back to shop
             </Link>
           </div>
+          {product.variants.map(variant => (
+            <button
+              type="button"
+              onClick={() => {
+                if (sliderRef) sliderRef.current.goToImageId(variant.image?.id)
+              }}
+              className={styles.variantColor}
+            >
+              {variant.title} |{' '}
+              {getMetafield(`variant_color`, variant.metafields)}
+            </button>
+          ))}
         </div>
 
         {product.title}

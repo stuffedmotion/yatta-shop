@@ -1,8 +1,7 @@
 import { ShopifyProductMetafield } from '@typings/storefront'
 
 const META_DEFAULTS = {
-  color: `#FFFFFF`,
-  size: `Large`,
+  variant_color: `#FF0000`,
 } as any
 
 export const getMetafield = (
