@@ -1,8 +1,9 @@
-import React, { useRef } from 'react'
 import { graphql, Link } from 'gatsby'
 import posed from 'react-pose'
+import React, { useRef, useState, useEffect } from 'react'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+import useDeepEffect from 'use-deep-compare-effect'
 
 import SEO from '@components/seo'
 import ProductOption from '@components/Product/ProductOption'
@@ -36,8 +37,40 @@ const Transition = posed.div({
 })
 
 const ProductPage = ({ data }: ProductPageProps) => {
+  const [selectedOptions, setSelectedOptions] = useState<{
+    [key: string]: any
+  }>({})
   const product = data.shopifyProduct
   const sliderRef = useRef(null)
+  const isFirstRun = useRef(true)
+
+  const handleUpdateOption = (key: string, value: string) => {
+    setSelectedOptions(prevState => ({ ...prevState, [key]: value }))
+  }
+
+  useDeepEffect(() => {
+    if (Object.keys(selectedOptions).length === 0) return
+
+    if (isFirstRun.current) {
+      isFirstRun.current = false
+      return
+    }
+
+    const matchedVariant = product.variants.find(variant =>
+      variant.selectedOptions.every(
+        option =>
+          option.name in selectedOptions &&
+          selectedOptions[option.name] === option.value
+      )
+    )
+    if (sliderRef && matchedVariant) {
+      sliderRef.current.goToImageId(matchedVariant.image?.id)
+      setTimeout(() => {
+        sliderRef.current.goToImageId(matchedVariant.image?.id)
+      }, 300)
+    }
+  }, [selectedOptions])
+
   return (
     <Transition>
       <SEO title={product.title} description={product.description} />
@@ -62,7 +95,8 @@ const ProductPage = ({ data }: ProductPageProps) => {
           {product.options.map(option => (
             <ProductOption
               key={option.id}
-              sliderRef={sliderRef}
+              handleUpdateOption={handleUpdateOption}
+              selectedOptions={selectedOptions}
               option={option}
               product={product}
             />
@@ -70,7 +104,7 @@ const ProductPage = ({ data }: ProductPageProps) => {
         </div>
 
         {product.title}
-        <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }} />
+        {/* <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }} /> */}
         {/* <ProductForm product={product} /> */}
       </div>
     </Transition>
