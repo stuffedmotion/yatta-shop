@@ -4,6 +4,10 @@ import React, { useRef, useState, useEffect } from 'react'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import useDeepEffect from 'use-deep-compare-effect'
+import chip_xs from '@assets/images/chip_xs.svg'
+import chip_s from '@assets/images/chip_s.svg'
+import chip_m from '@assets/images/chip_m.svg'
+import chip_xl from '@assets/images/chip_xl.svg'
 
 import SEO from '@components/seo'
 import ProductOption from '@components/Product/ProductOption'
@@ -12,6 +16,7 @@ import { ShopifyProduct } from '@typings/storefront'
 import Slider from '@components/Slider'
 import { getMetafield } from '@utils/getMetafield'
 import styles from './styles.module.scss'
+import Helmet from 'react-helmet'
 
 interface ProductPageProps {
   data: {
@@ -45,6 +50,8 @@ const ProductPage = ({ data }: ProductPageProps) => {
   const isFirstRun = useRef(true)
 
   const handleUpdateOption = (key: string, value: string) => {
+    if (key in selectedOptions && selectedOptions[key] === value) return
+
     setSelectedOptions(prevState => ({ ...prevState, [key]: value }))
   }
 
@@ -73,6 +80,12 @@ const ProductPage = ({ data }: ProductPageProps) => {
 
   return (
     <Transition>
+      <Helmet>
+        <link rel="preload" as="image" href={chip_xs} />
+        <link rel="preload" as="image" href={chip_s} />
+        <link rel="preload" as="image" href={chip_m} />
+        <link rel="preload" as="image" href={chip_xl} />
+      </Helmet>
       <SEO title={product.title} description={product.description} />
       <div className={styles.productWrapper}>
         <div className={styles.left}>
