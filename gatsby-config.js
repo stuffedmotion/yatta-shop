@@ -101,20 +101,16 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-plugin-prefetch-google-fonts`,
+      resolve: `gatsby-plugin-google-fonts`,
       options: {
         fonts: [
-          {
-            family: `Manrope`,
-            variants: [`200`],
-          },
-          {
-            family: `Baloo Bhaina 2`,
-            variants: [`400`, `700`, `800`],
-          },
+          `Manrope\:300`,
+          `Baloo Bhaina 2\:400,500,800`, // you can also specify font weights and styles
         ],
+        display: `swap`,
       },
     },
+
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.app/offline
     // 'gatsby-plugin-offline',

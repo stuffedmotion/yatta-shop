@@ -1,13 +1,9 @@
 import { graphql, Link } from 'gatsby'
 import posed from 'react-pose'
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState, memo } from 'react'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import useDeepEffect from 'use-deep-compare-effect'
-import chip_xs from '@assets/images/chip_xs.svg'
-import chip_s from '@assets/images/chip_s.svg'
-import chip_m from '@assets/images/chip_m.svg'
-import chip_xl from '@assets/images/chip_xl.svg'
+import back_arrow from '@assets/images/back_arrow.svg'
 
 import SEO from '@components/seo'
 import ProductOption from '@components/Product/ProductOption'
@@ -15,8 +11,8 @@ import ProductForm from '@components/Product/ProductForm'
 import { ShopifyProduct } from '@typings/storefront'
 import Slider from '@components/Slider'
 import { getMetafield } from '@utils/getMetafield'
-import styles from './styles.module.scss'
 import Helmet from 'react-helmet'
+import styles from './styles.module.scss'
 
 interface ProductPageProps {
   data: {
@@ -46,48 +42,63 @@ const ProductPage = ({ data }: ProductPageProps) => {
     [key: string]: any
   }>({})
   const product = data.shopifyProduct
+  const {
+    options,
+    variants,
+    variants: [initialVariant],
+    priceRange: { minVariantPrice },
+  } = product
+
   const sliderRef = useRef(null)
-  const isFirstRun = useRef(true)
+
+  const [variant, setVariant] = useState({ ...initialVariant })
 
   const handleUpdateOption = (key: string, value: string) => {
     if (key in selectedOptions && selectedOptions[key] === value) return
 
-    setSelectedOptions(prevState => ({ ...prevState, [key]: value }))
+    setSelectedOptions(prevState => {
+      const newOptions = { ...prevState, [key]: value }
+
+      // Get new variant
+      const matchedVariant = variants.find(variant =>
+        variant.selectedOptions.every(
+          option =>
+            option.name in newOptions &&
+            newOptions[option.name] === option.value
+        )
+      )
+
+      // Update slider image
+      if (sliderRef && matchedVariant) {
+        sliderRef.current.goToImageId(matchedVariant.image?.id)
+        setTimeout(() => {
+          sliderRef.current.goToImageId(matchedVariant.image?.id)
+        }, 300)
+      }
+
+      setVariant({ ...matchedVariant })
+
+      return newOptions
+    })
   }
 
-  useDeepEffect(() => {
-    if (Object.keys(selectedOptions).length === 0) return
-
-    if (isFirstRun.current) {
-      isFirstRun.current = false
-      return
-    }
-
-    const matchedVariant = product.variants.find(variant =>
-      variant.selectedOptions.every(
-        option =>
-          option.name in selectedOptions &&
-          selectedOptions[option.name] === option.value
-      )
-    )
-    if (sliderRef && matchedVariant) {
-      sliderRef.current.goToImageId(matchedVariant.image?.id)
-      setTimeout(() => {
-        sliderRef.current.goToImageId(matchedVariant.image?.id)
-      }, 300)
-    }
-  }, [selectedOptions])
+  const titleArea = (
+    <div className={styles.titleArea}>
+      <div className={styles.titles}>
+        <h2>Phil</h2>
+        <h1>{product.title}</h1>
+      </div>
+      <Link className={styles.back} to="/">
+        <img alt="back to shop" src={back_arrow} /> shop
+      </Link>
+    </div>
+  )
 
   return (
     <Transition>
-      <Helmet>
-        <link rel="preload" as="image" href={chip_xs} />
-        <link rel="preload" as="image" href={chip_s} />
-        <link rel="preload" as="image" href={chip_m} />
-        <link rel="preload" as="image" href={chip_xl} />
-      </Helmet>
       <SEO title={product.title} description={product.description} />
       <div className={styles.productWrapper}>
+        <div className="hideDesktop">{titleArea}</div>
         <div className={styles.left}>
           <Slider
             ref={sliderRef}
@@ -96,16 +107,8 @@ const ProductPage = ({ data }: ProductPageProps) => {
           />
         </div>
         <div className={styles.right}>
-          <div className={styles.titleArea}>
-            <div className={styles.titles}>
-              <h2>Phil</h2>
-              <h1>blowfish t-shirt</h1>
-            </div>
-            <Link className={styles.back} to="/">
-              back to shop
-            </Link>
-          </div>
-          {product.options.map(option => (
+          <div className="hideMobile">{titleArea}</div>
+          {options.map(option => (
             <ProductOption
               key={option.id}
               handleUpdateOption={handleUpdateOption}
@@ -116,7 +119,6 @@ const ProductPage = ({ data }: ProductPageProps) => {
           ))}
         </div>
 
-        {product.title}
         {/* <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }} /> */}
         {/* <ProductForm product={product} /> */}
       </div>
@@ -132,4 +134,4 @@ export const query = graphql`
   }
 `
 
-export default ProductPage
+export default memo(ProductPage)

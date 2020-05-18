@@ -1,7 +1,7 @@
 @import 'src/assets/scss/variables';
 
 .optionWrapper {
-  margin-bottom: 5rem;
+  margin-bottom: 7rem;
 }
 
 .colorOption {
@@ -40,17 +40,17 @@
 .sizeOption {
   display: flex;
   align-items: flex-end;
-  padding-left: 1.6rem;
+  // padding-left: 1.6rem;
 }
 
 .sizeSlider {
   position: relative;
-  width: 100%;
+  flex: 1;
   margin-right: 2rem;
 }
 
 $dot-size: 22px;
-$handle-size: 50px;
+$handle-size: 51px;
 
 .sizeSliderTrack {
   display: flex;
@@ -76,6 +76,7 @@ $handle-size: 50px;
   height: $handle-size;
   position: absolute;
   width: $handle-size;
+  -webkit-backface-visibility: hidden;
   z-index: 1;
 
   img {
@@ -95,7 +96,8 @@ $handle-size: 50px;
 .sizeChipmunk {
   align-items: flex-end;
   display: flex;
-  width: 20rem;
+  min-height: 15rem;
+  width: 14rem;
 
   img {
     bottom: -1.5rem;
@@ -118,7 +120,7 @@ $handle-size: 50px;
   transform: translateX(-50%);
 
   &.first {
-    left: 0;
+    left: 1rem;
     transform: translateX(0);
   }
 
@@ -133,13 +135,16 @@ $handle-size: 50px;
   background-color: white;
   border-radius: 1rem;
   cursor: default;
+  font-family: $font-heading;
   font-size: 1.6rem;
-  padding: 0.8rem 1.5rem;
+  font-weight: 400;
+  padding: 1.1rem 1.5rem 0.6rem 1.5rem;
   position: relative;
   white-space: nowrap;
 
   strong {
-    font-weight: 700;
+    font-family: $font-heading;
+    font-weight: 800;
   }
 }
 
@@ -156,7 +161,7 @@ $handle-size: 50px;
   width: 0;
 
   .first & {
-    left: 1.5rem;
+    left: 0.9rem;
     transform: translateX(0);
   }
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, memo } from 'react'
 import cx from 'classnames'
 import { getMetafield } from '@utils/getMetafield'
 import { ShopifyProduct, ShopifyProductOption } from '@typings/storefront'
@@ -35,8 +35,11 @@ const optionRenderer = (props: ProductOptionProps) => {
     case `Size`:
       return SizeOption(props)
 
+    case `Title`:
+      return null
+
     default:
-      return <h2>Missing option</h2>
+      return <h2>Missing option: {name}</h2>
   }
 }
 
@@ -60,8 +63,8 @@ const SizeOption = (props: ProductOptionProps) => {
   const { option, handleUpdateOption, selectedOptions } = props
   const [ref, { width }] = useDimensions()
 
-  const dragBasisLength = Math.round(width - HANDLE_WIDTH)
-  const snapLength = dragBasisLength / (option.values.length - 1)
+  const dragBasisLength = width - HANDLE_WIDTH
+  const snapLength = Math.round(dragBasisLength / (option.values.length - 1))
   const snapPercent = snapLength / dragBasisLength
 
   let currentOptionIndex = selectedOptions[option.name]
@@ -205,4 +208,4 @@ const ProductOption = (props: ProductOptionProps) => {
   return <>{optionRenderer(props)}</>
 }
 
-export default ProductOption
+export default memo(ProductOption)

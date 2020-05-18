@@ -26,3 +26,11 @@ h2,
 h3 {
   font-size: 2rem;
 }
+
+.hideDesktop {
+  @include hide-desktop;
+}
+
+.hideMobile {
+  @include hide-phone;
+}

@@ -2,6 +2,7 @@
 import cx from 'classnames'
 import { ShopifyProductImages } from '@typings/storefront'
 import React, {
+  memo,
   useState,
   useEffect,
   useRef,
@@ -97,4 +98,4 @@ const Slider: React.SFC<SliderProps> = forwardRef(
   }
 )
 
-export default Slider
+export default memo(Slider)

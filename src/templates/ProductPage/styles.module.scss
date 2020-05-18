@@ -4,7 +4,7 @@
 .productWrapper {
   display: flex;
   justify-content: space-between;
-  max-width: 118rem;
+  max-width: 114rem;
   margin: 0 auto;
 
   @include for-phone-only {
@@ -12,21 +12,58 @@
   }
 }
 
+.titleArea {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
 .titles {
-  h2 {
+  h1 {
     @extend .th_subtitle;
+    font-size: 2.7rem;
+    font-weight: 500;
+  }
+  h2 {
+    color: $color-brown;
+    font-size: 4.8rem;
+    font-family: $font-heading;
+    font-weight: 800;
+    line-height: 1;
+
+    @include for-phone-only {
+      font-size: 3.1rem;
+      font-size: 10vw;
+    }
+  }
+}
+
+.back {
+  align-items: center;
+  color: #eaa7c9;
+  display: flex;
+  font-family: $font-heading;
+  font-size: 1.8rem;
+  font-weight: 500;
+  line-height: 1;
+  margin-top: 0.6rem;
+
+  img {
+    margin-right: 1rem;
+    margin-top: -0.4rem;
+    width: 2rem;
   }
 }
 
 .left {
   @include for-desktop-only {
-    width: 40%;
+    width: 43%;
   }
 }
 
 .right {
   @include for-desktop-only {
-    width: 43%;
+    width: 52%;
   }
 }
 
