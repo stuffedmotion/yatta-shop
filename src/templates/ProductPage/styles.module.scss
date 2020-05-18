@@ -70,3 +70,38 @@
 .variantColor {
   font-size: 2rem;
 }
+
+.addToCart {
+  align-items: center;
+  background-color: #ea6194;
+  border-radius: 1.8rem;
+  box-shadow: 3px 5px #dd5089;
+  cursor: pointer;
+  display: flex;
+  overflow: visible;
+  padding: 1rem 2rem;
+  position: relative;
+
+  &:hover {
+  }
+  rgb(32, 14, 21) &:active {
+    top: 2px;
+    left: 2px;
+    box-shadow: 1px 2px #dd5089;
+  }
+
+  span {
+    color: white;
+    font-family: $font-heading;
+    font-size: 2.4rem;
+    font-weight: 500;
+    line-height: 1;
+    margin-top: 0.6rem;
+    margin-left: 1rem;
+  }
+}
+
+.cartLottie {
+  display: flex;
+  width: 4rem;
+}

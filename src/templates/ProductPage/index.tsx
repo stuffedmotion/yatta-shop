@@ -1,17 +1,21 @@
 import { graphql, Link } from 'gatsby'
+import { AnimationConfig } from 'lottie-web'
+import Helmet from 'react-helmet'
 import posed from 'react-pose'
-import React, { useRef, useState, memo } from 'react'
+import React, { useRef, useState, memo, useContext } from 'react'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import back_arrow from '@assets/images/back_arrow.svg'
 
+import back_arrow from '@assets/images/back_arrow.svg'
+import cartAnim from '@assets/lottie/cart.json'
 import SEO from '@components/seo'
 import ProductOption from '@components/Product/ProductOption'
 import ProductForm from '@components/Product/ProductForm'
-import { ShopifyProduct } from '@typings/storefront'
 import Slider from '@components/Slider'
+import StoreContext from '@context/StoreContext'
+import { ShopifyProduct } from '@typings/storefront'
 import { getMetafield } from '@utils/getMetafield'
-import Helmet from 'react-helmet'
+import useLottie from '@utils/useLottie'
 import styles from './styles.module.scss'
 
 interface ProductPageProps {
@@ -50,10 +54,18 @@ const ProductPage = ({ data }: ProductPageProps) => {
   } = product
 
   const sliderRef = useRef(null)
-
   const [variant, setVariant] = useState({ ...initialVariant })
 
-  const handleUpdateOption = (key: string, value: string) => {
+  const {
+    addVariantToCart,
+    store: { client, adding },
+  } = useContext(StoreContext)
+
+  const handleUpdateOption = (
+    key: string,
+    value: string,
+    updateSlider = false
+  ) => {
     if (key in selectedOptions && selectedOptions[key] === value) return
 
     setSelectedOptions(prevState => {
@@ -69,7 +81,7 @@ const ProductPage = ({ data }: ProductPageProps) => {
       )
 
       // Update slider image
-      if (sliderRef && matchedVariant) {
+      if (updateSlider && sliderRef && matchedVariant) {
         sliderRef.current.goToImageId(matchedVariant.image?.id)
         setTimeout(() => {
           sliderRef.current.goToImageId(matchedVariant.image?.id)
@@ -94,6 +106,25 @@ const ProductPage = ({ data }: ProductPageProps) => {
     </div>
   )
 
+  const cartLottieConfig = {
+    animationData: cartAnim,
+    name: `cartAdd`,
+    autoplay: false,
+    loop: false,
+    rendererSettings: {
+      preserveAspectRatio: `xMinYMin slice`,
+    },
+  } as Partial<AnimationConfig>
+
+  const { Lottie, anim } = useLottie(cartLottieConfig, {
+    className: styles.cartLottie,
+  })
+
+  const handleAddToCart = () => {
+    anim.goToAndPlay(0, true)
+    if (variant.shopifyId) addVariantToCart(variant.shopifyId, `1`)
+  }
+
   return (
     <Transition>
       <SEO title={product.title} description={product.description} />
@@ -117,6 +148,14 @@ const ProductPage = ({ data }: ProductPageProps) => {
               product={product}
             />
           ))}
+          <button
+            className={styles.addToCart}
+            type="button"
+            disabled={adding}
+            onClick={handleAddToCart}
+          >
+            {Lottie} <span>add to cart</span>
+          </button>
         </div>
 
         {/* <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }} /> */}

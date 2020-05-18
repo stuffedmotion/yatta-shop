@@ -17,7 +17,11 @@ interface ProductOptionProps {
   product: ShopifyProduct
   option: ShopifyProductOption
   selectedOptions: { [key: string]: string }
-  handleUpdateOption: (key: string, value: string) => void
+  handleUpdateOption: (
+    key: string,
+    value: string,
+    updateSlider?: boolean
+  ) => void
 }
 
 const HANDLE_WIDTH = 50
@@ -73,7 +77,7 @@ const SizeOption = (props: ProductOptionProps) => {
 
   if (currentOptionIndex === -1) currentOptionIndex = 0
 
-  const updateColor = (optionIndex: number) =>
+  const updateOption = (optionIndex: number) =>
     handleUpdateOption(option.name, option.values[optionIndex])
 
   const currentChipmunkIndex = Math.round(
@@ -89,7 +93,7 @@ const SizeOption = (props: ProductOptionProps) => {
         <img alt="" src={line} className={styles.sizeLine} />
         <Draggable
           onDrag={(_e, data) => {
-            updateColor(Math.round(data.x / dragBasisLength / snapPercent))
+            updateOption(Math.round(data.x / dragBasisLength / snapPercent))
           }}
           grid={[snapLength, 0]}
           axis="x"
@@ -121,9 +125,9 @@ const SizeOption = (props: ProductOptionProps) => {
             <button
               aria-label={`Size ${value}`}
               type="button"
-              onClick={() => updateColor(idx)}
+              onClick={() => updateOption(idx)}
               onKeyDown={e => {
-                if (e.keyCode === 13) updateColor(idx)
+                if (e.keyCode === 13) updateOption(idx)
               }}
               tabIndex={10 + idx}
               key={value}
@@ -163,7 +167,7 @@ const ColorOption = (props: ProductOptionProps) => {
           <button
             key={value}
             type="button"
-            onClick={() => handleUpdateOption(option.name, value)}
+            onClick={() => handleUpdateOption(option.name, value, true)}
             className={cx(styles.color, {
               [styles.active]: value === selectedOptions[option.name],
             })}
