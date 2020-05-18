@@ -11562,17 +11562,10 @@ react-side-effect@^1.1.0:
   dependencies:
     shallowequal "^1.0.1"
 
-"react-slick-teehouse@file:.yalc/react-slick-teehouse":
-  version "0.26.1-6e2203b4"
-  dependencies:
-    classnames "^2.2.5"
-    enquire.js "^2.1.6"
-    json2mq "^0.2.0"
-    lodash.debounce "^4.0.8"
-    resize-observer-polyfill "^1.5.0"
-
-"react-slick@file:.yalc/react-slick":
-  version "0.26.1-f4a567d1"
+react-slick-teehouse@0.26.1:
+  version "0.26.1"
+  resolved "https://registry.yarnpkg.com/react-slick-teehouse/-/react-slick-teehouse-0.26.1.tgz#335c4d9ea75ecb720d42282a7d117eda3dfb3fa1"
+  integrity sha512-9vCMTYYKp09GxwJ09j2nh2gfIedqlq4u8YNXr452+JfY/n8AMJu6eZ2vIn3qbLfVASZKABM3DmQp3KcR+/1U0g==
   dependencies:
     classnames "^2.2.5"
     enquire.js "^2.1.6"
