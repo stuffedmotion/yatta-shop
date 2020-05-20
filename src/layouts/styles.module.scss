@@ -1,5 +1,10 @@
 @import 'src/assets/scss/variables';
 
+.blockScroll {
+  overflow: hidden;
+  overflow-x: hidden;
+}
+
 .layout {
   position: relative;
   @include for-phone-only {
@@ -20,4 +25,25 @@
 .footer {
   height: 500px;
   background-color: red;
+}
+
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  // pointer-events: none;
+  background: rgba(0, 0, 0, 0.4);
+  transition: visibility 0.3s, opacity 0.3s;
+
+  will-change: opacity, visibility;
+  visibility: hidden;
+  z-index: 3;
+
+  &.overlayActive {
+    opacity: 1;
+    visibility: visible;
+  }
 }

@@ -83,7 +83,7 @@
     line-height: 1;
     margin-left: 3.5rem;
     position: relative;
-    transition: all 0.1s;
+    transition: color 0.1s, transform 0.1s;
     will-change: color, transform;
 
     &:hover {
@@ -115,14 +115,23 @@
 .cart {
   background-color: #ea6194;
   border-radius: 50%;
+  cursor: pointer;
+  display: block;
   flex: none;
   height: 2.2rem;
   margin-left: 4rem;
   margin-top: -1rem;
   padding: 1rem;
   position: relative;
+  transition: background-color 0.1s, transform 0.1s;
   width: 2.2rem;
+  will-change: background-color, transform;
   z-index: 2;
+
+  &:hover {
+    background-color: $color-brown;
+    transform: translate(0, -0.3rem);
+  }
 
   img {
     margin-top: 0.2rem;
@@ -140,12 +149,14 @@
   right: 4rem;
   opacity: 0;
   transition: opacity 0.3s;
+  pointer-events: none;
   will-change: opacity;
 
   @include hide-phone;
 
   :global(body.scrolled) & {
     opacity: 1;
+    pointer-events: initial;
   }
 }
 

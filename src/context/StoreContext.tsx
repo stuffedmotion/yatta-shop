@@ -5,6 +5,8 @@ type StoreContext = {
   addVariantToCart(variantId: string, quantity: string): void
   removeLineItem(lineItemID: string): void
   updateLineItem(lineItemID: string, quantity: string): void
+  openCart(): void
+  closeCart(): void
   store: StoreStateProps
 }
 
@@ -18,6 +20,7 @@ interface StoreStateProps {
   checkout: any
   products: Array<any>
   shop: any
+  cartOpen: boolean
 }
 
 const StoreContext = React.createContext<StoreContext | null>(null)
@@ -34,6 +37,7 @@ export const ContextProvider = ({ children }: ContextProviderProps) => {
     checkout: { lineItems: [] },
     products: [],
     shop: {},
+    cartOpen: true,
   } as StoreStateProps
 
   const [store, updateStore] = useState(initialStoreState)
@@ -122,6 +126,11 @@ export const ContextProvider = ({ children }: ContextProviderProps) => {
               updateStore(prevState => ({ ...prevState, checkout: res }))
             })
         },
+        openCart: () =>
+          updateStore(prevState => ({ ...prevState, cartOpen: true })),
+
+        closeCart: () =>
+          updateStore(prevState => ({ ...prevState, cartOpen: false })),
       }}
     >
       {children}

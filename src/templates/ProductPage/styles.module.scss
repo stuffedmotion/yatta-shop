@@ -81,13 +81,18 @@
   overflow: visible;
   padding: 1rem 2rem;
   position: relative;
+  transition: transform 0.1s, box-shadow 0.1s;
+  transform: translate(0, 0);
+  transform-origin: bottom right;
 
-  &:hover {
+  &:active:not(.disableAdd) {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 3px #dd5089;
   }
-  rgb(32, 14, 21) &:active {
-    top: 2px;
-    left: 2px;
-    box-shadow: 1px 2px #dd5089;
+
+  &.disableAdd {
+    cursor: not-allowed;
+    opacity: 0.4;
   }
 
   span {
@@ -104,4 +109,5 @@
 .cartLottie {
   display: flex;
   width: 4rem;
+  height: 4.1rem;
 }

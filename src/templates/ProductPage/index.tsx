@@ -1,3 +1,4 @@
+import cx from 'classnames'
 import { graphql, Link } from 'gatsby'
 import { AnimationConfig } from 'lottie-web'
 import Helmet from 'react-helmet'
@@ -121,8 +122,10 @@ const ProductPage = ({ data }: ProductPageProps) => {
   })
 
   const handleAddToCart = () => {
-    anim.goToAndPlay(0, true)
-    if (variant.shopifyId) addVariantToCart(variant.shopifyId, `1`)
+    if (variant.shopifyId && !adding) {
+      anim.goToAndPlay(0, true)
+      if (variant.shopifyId) addVariantToCart(variant.shopifyId, `1`)
+    }
   }
 
   return (
@@ -149,12 +152,14 @@ const ProductPage = ({ data }: ProductPageProps) => {
             />
           ))}
           <button
-            className={styles.addToCart}
+            className={cx(styles.addToCart, {
+              [styles.disableAdd]: !variant.shopifyId,
+            })}
             type="button"
-            disabled={adding}
             onClick={handleAddToCart}
           >
-            {Lottie} <span>add to cart</span>
+            {Lottie}
+            <span>{variant.shopifyId ? `add to cart` : `unavailable`}</span>
           </button>
         </div>
 

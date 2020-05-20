@@ -1,0 +1,67 @@
+@import 'src/assets/scss/variables';
+@import 'src/assets/scss/typography';
+
+.cart {
+  background-color: white;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 50rem;
+  overflow: hidden;
+  padding: 2rem 1.5rem;
+  position: fixed;
+  right: 0;
+  top: 0;
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.87, 0, 0.13, 1);
+  will-change: transform;
+  width: 100%;
+  z-index: 5;
+
+  @include for-phone-only {
+  }
+}
+
+.cart.active {
+  transform: translateX(0);
+}
+
+.headerTop {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.headerBottom {
+  @extend .th_subtitle;
+  font-size: 2rem;
+  font-weight: 500;
+  margin-top: 1.2rem;
+  text-align: center;
+}
+
+.happy {
+  flex: 1;
+  max-width: 4rem;
+}
+
+.close {
+  cursor: pointer;
+  height: 2rem;
+  width: 2rem;
+}
+.title {
+  color: $color-brown;
+  font-size: 2.3rem;
+  font-family: $font-heading;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  padding: 0.7rem 1rem 0 1rem;
+}
+
+.scrollable {
+  flex: 1;
+  overflow-y: auto;
+}

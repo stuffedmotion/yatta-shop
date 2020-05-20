@@ -1,8 +1,11 @@
+/* eslint-disable jsx-a11y/interactive-supports-focus */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import cx from 'classnames'
 import { Link } from 'gatsby'
 import reduce from 'lodash/reduce'
 import { AnimationConfig } from 'lottie-web'
 import React, { useContext, useState, useEffect } from 'react'
+import posed from 'react-pose'
 import { useScrollPosition } from 'react-use-scroll-position'
 
 import cart from '@assets/images/cart.svg'
@@ -11,10 +14,10 @@ import headerMobileAnim from '@assets/lottie/header_mobile.json'
 import mobileMenuAnim from '@assets/lottie/mobile_menu.json'
 import logo from '@assets/images/teehouse_logo.svg'
 import whale from '@assets/images/whale.svg'
+import Cart from '@components/Cart'
 import StoreContext from '@context/StoreContext'
 import useLottie from '@utils/useLottie'
 import styles from './styles.module.scss'
-import posed from 'react-pose'
 
 const useQuantity = (): [boolean, number] => {
   const {
@@ -43,8 +46,10 @@ const mobileMenuConfig = {
 } as Partial<AnimationConfig>
 
 const Header = () => {
-  const [state, setState] = useState({ mobileOpen: false, cartOpen: false })
+  const [state, setState] = useState({ mobileOpen: false })
   const { y: scrollY } = useScrollPosition()
+
+  const { openCart } = useContext(StoreContext)
 
   useEffect(() => {
     if (scrollY > 70) document.body.classList.add(`scrolled`)
@@ -90,14 +95,15 @@ const Header = () => {
       return {
         ...prevState,
         mobileOpen: !mobileOpen,
-        cartOpen: false,
       }
     })
   }
+  console.log('nav')
 
   return (
     <>
       <MobileMenu isOpen={state.mobileOpen} />
+      <Cart />
       <div className={styles.header}>
         {HeaderDesktopLottie}
         {HeaderMobileLottie}
@@ -111,11 +117,11 @@ const Header = () => {
 
           <div className={styles.navWrapper}>
             <Navigation className={styles.navigation} />
-            <CartButton />
+            <CartButton onClick={openCart} />
           </div>
         </div>
       </div>
-      <CartButton className={styles.fixedCart} />
+      <CartButton onClick={openCart} className={styles.fixedCart} />
     </>
   )
 }
@@ -134,11 +140,17 @@ const Navigation = ({ className }: { className: string }) => (
   </nav>
 )
 
-const CartButton = ({ className }: { className?: string }) => {
+const CartButton = ({
+  onClick,
+  className,
+}: {
+  onClick: () => void
+  className?: string
+}) => {
   const [hasItems, quantity] = useQuantity()
 
   return (
-    <div className={cx(styles.cart, className)}>
+    <div role="button" onClick={onClick} className={cx(styles.cart, className)}>
       <img alt="cart" src={cart} />
       {hasItems && <div className={styles.quantity}>{quantity}</div>}
     </div>
