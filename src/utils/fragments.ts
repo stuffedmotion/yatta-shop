@@ -21,6 +21,7 @@ export const COLLECTION_DETAILS_FRAGMENT_ALL = graphql`
 `
 export const PRODUCT_DETAILS_FRAGMENT = graphql`
   fragment ProductDetails on ShopifyProduct {
+    shopifyId
     title
     handle
     productType

@@ -1,0 +1,41 @@
+@import 'src/assets/scss/variables';
+
+.lineItem {
+  align-items: center;
+  border-bottom: 1px solid #ffdcf3;
+  display: flex;
+  font-size: 1.5rem;
+  margin-bottom: 3rem;
+  padding-bottom: 3rem;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  * {
+    color: #3d3d3d;
+    font-family: $font-heading;
+    font-size: 1.8rem;
+    font-weight: 900;
+    line-height: 1;
+  }
+}
+
+.image {
+  width: 12rem;
+  height: 9rem;
+  border-radius: 1rem;
+}
+
+.details {
+  flex: 1;
+  padding: 0 2.5rem;
+}
+
+.title {
+  margin-bottom: 0.6rem;
+}
+.variantTitle {
+  font-weight: 300;
+  font-size: 1.6rem;
+}

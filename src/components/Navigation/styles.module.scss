@@ -74,6 +74,7 @@
 .navigation {
   align-items: flex-start;
   display: flex;
+  padding-right: 7.8rem;
 
   a {
     color: $color-pink;
@@ -116,7 +117,7 @@
   background-color: #ea6194;
   border-radius: 50%;
   cursor: pointer;
-  display: block;
+  display: none;
   flex: none;
   height: 2.2rem;
   margin-left: 4rem;
@@ -138,26 +139,21 @@
   }
 
   @include for-phone-only {
+    display: block;
     margin-left: 0;
     margin-top: 0;
   }
 }
 
 .fixedCart {
+  display: block;
   position: fixed;
-  top: 3rem;
-  right: 4rem;
-  opacity: 0;
+  top: 5.1rem;
+  right: 3rem;
   transition: opacity 0.3s;
-  pointer-events: none;
   will-change: opacity;
 
   @include hide-phone;
-
-  :global(body.scrolled) & {
-    opacity: 1;
-    pointer-events: initial;
-  }
 }
 
 .quantity {

@@ -8,8 +8,6 @@ import LineItem from './LineItem'
 import styles from './styles.module.scss'
 
 const Cart = () => {
-  console.log('cart')
-
   const {
     store: { checkout, cartOpen },
     closeCart,

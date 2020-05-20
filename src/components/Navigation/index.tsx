@@ -6,7 +6,6 @@ import reduce from 'lodash/reduce'
 import { AnimationConfig } from 'lottie-web'
 import React, { useContext, useState, useEffect } from 'react'
 import posed from 'react-pose'
-import { useScrollPosition } from 'react-use-scroll-position'
 
 import cart from '@assets/images/cart.svg'
 import headerDesktopAnim from '@assets/lottie/header_desktop.json'
@@ -47,14 +46,8 @@ const mobileMenuConfig = {
 
 const Header = () => {
   const [state, setState] = useState({ mobileOpen: false })
-  const { y: scrollY } = useScrollPosition()
 
   const { openCart } = useContext(StoreContext)
-
-  useEffect(() => {
-    if (scrollY > 70) document.body.classList.add(`scrolled`)
-    else document.body.classList.remove(`scrolled`)
-  }, [scrollY])
 
   const { Lottie: HeaderDesktopLottie } = useLottie(headerDesktopConfig, {
     className: styles.headerDesktopLottie,
@@ -98,7 +91,6 @@ const Header = () => {
       }
     })
   }
-  console.log('nav')
 
   return (
     <>
