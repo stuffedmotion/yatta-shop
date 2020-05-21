@@ -62,13 +62,40 @@
 }
 
 .scrollable {
+  display: flex;
   flex: 1;
+  flex-direction: column;
   overflow-y: auto;
-  padding: 2rem 1.5rem;
   -webkit-overflow-scrolling: touch;
 }
 
 .header {
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
   padding: 2rem 1.5rem;
+  z-index: 1;
+}
+
+.lineItems,
+.addonItems {
+  padding: 2rem 1.5rem;
+}
+
+.lineItems {
+  background-color: white;
+}
+
+.addonItems {
+  background-color: #fff3f7;
+}
+
+.lineItem {
+  border-bottom: 1px solid #ffdcf3;
+  margin-bottom: 3rem;
+  padding-bottom: 3rem;
+
+  &:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 1.5rem;
+  }
 }

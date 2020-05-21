@@ -2,15 +2,8 @@
 
 .lineItem {
   align-items: center;
-  border-bottom: 1px solid #ffdcf3;
   display: flex;
   font-size: 1.5rem;
-  margin-bottom: 3rem;
-  padding-bottom: 3rem;
-
-  &:last-child {
-    border-bottom: none;
-  }
 
   * {
     color: #3d3d3d;
@@ -97,4 +90,14 @@
     margin-top: 0.6rem;
     margin-left: 1rem;
   }
+}
+
+.addButton {
+  border-radius: 1.2rem;
+  color: white;
+  font-weight: 500;
+  height: initial;
+  padding: 1.3rem 1.5rem 0.8rem 1.5rem;
+  text-shadow: 1px 2px #d14a81;
+  width: auto;
 }
