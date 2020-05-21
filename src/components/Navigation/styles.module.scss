@@ -6,8 +6,12 @@
 
   @include for-phone-only {
     background-color: #ea6093;
+    left: 0;
+    margin: 0;
     position: fixed;
     top: 0;
+    -ms-transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
     width: 100%;
     z-index: 2;

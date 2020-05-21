@@ -3,7 +3,7 @@ import { graphql, Link } from 'gatsby'
 import { AnimationConfig } from 'lottie-web'
 import Helmet from 'react-helmet'
 import posed from 'react-pose'
-import React, { useRef, useState, memo, useContext } from 'react'
+import React, { useRef, useState, memo, useContext, useEffect } from 'react'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
@@ -56,9 +56,11 @@ const ProductPage = ({ data }: ProductPageProps) => {
 
   const sliderRef = useRef(null)
   const [variant, setVariant] = useState({ ...initialVariant })
+  const [shouldOpenCart, setShouldOpenCart] = useState(false)
 
   const {
     addVariantToCart,
+    openCart,
     store: { client, adding },
   } = useContext(StoreContext)
 
@@ -94,6 +96,16 @@ const ProductPage = ({ data }: ProductPageProps) => {
       return newOptions
     })
   }
+
+  useEffect(() => {
+    if (adding) return setShouldOpenCart(true)
+    if (!adding && shouldOpenCart) {
+      setTimeout(() => {
+        setShouldOpenCart(false)
+        openCart()
+      }, 800)
+    }
+  }, [adding, shouldOpenCart])
 
   const titleArea = (
     <div className={styles.titleArea}>

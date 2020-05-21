@@ -1,15 +1,20 @@
-import Image from 'gatsby-image'
-import React, { useContext } from 'react'
-
-import StoreContext from '@context/StoreContext'
+import cx from 'classnames'
 import { useStaticQuery, graphql } from 'gatsby'
+import Image from 'gatsby-image'
+import React, { useContext, useState } from 'react'
+
+import minus from '@assets/images/minus.svg'
+import plus from '@assets/images/plus.svg'
+import StoreContext from '@context/StoreContext'
 import { Query } from '@typings/storefront'
 import styles from './styles.module.scss'
 import { getPrice } from '@utils/helpers'
 
 const LineItem = (props: any) => {
   const { line_item } = props
-  const { removeLineItem } = useContext(StoreContext)
+  const { updateLineItem, removeLineItem } = useContext(StoreContext)
+
+  const [isAdding, setIsAdding] = useState(false)
 
   const { allShopifyProduct }: Query = useStaticQuery(
     graphql`
@@ -71,8 +76,14 @@ const LineItem = (props: any) => {
       )
     : null
 
-  const handleRemove = () => {
-    removeLineItem(line_item.id)
+  const updateQuantity = async (increase = true) => {
+    if (isAdding) return
+    setIsAdding(true)
+    const newQuantity = line_item.quantity + (increase ? 1 : -1)
+    if (newQuantity <= 0) return removeLineItem(line_item.id)
+
+    await updateLineItem(line_item.id, `${newQuantity}`)
+    setIsAdding(false)
   }
 
   return (
@@ -80,8 +91,26 @@ const LineItem = (props: any) => {
       {variantImage}
       <div className={styles.details}>
         <div className={styles.title}>{product.title}</div>
-        <div className={styles.variantTitle}>{variant.title}</div>
-        {/* <div className={styles.quantity}>{line_item.quantity}</div> */}
+        {variant.title !== `Default Title` && (
+          <div className={styles.variantTitle}>{variant.title}</div>
+        )}
+        <div className={styles.quantity}>
+          <button
+            onClick={() => updateQuantity(false)}
+            className={cx(styles.button, { [styles.disabled]: isAdding })}
+            type="button"
+          >
+            <img src={minus} alt="decrease quantity" />
+          </button>
+          <div className={styles.number}>{line_item.quantity}</div>
+          <button
+            onClick={() => updateQuantity()}
+            className={cx(styles.button, { [styles.disabled]: isAdding })}
+            type="button"
+          >
+            <img src={plus} alt="decrease quantity" />
+          </button>
+        </div>
       </div>
       <div className={styles.price}>{getPrice(variant.price)}</div>
     </div>

@@ -6,6 +6,7 @@ import close from '@assets/images/close.svg'
 import StoreContext from '@context/StoreContext'
 import LineItem from './LineItem'
 import styles from './styles.module.scss'
+import posed, { PoseGroup } from 'react-pose'
 
 const Cart = () => {
   const {
@@ -16,6 +17,11 @@ const Cart = () => {
   const handleCheckout = () => {
     window.location = checkout.webUrl
   }
+
+  const Transition = posed.div({
+    flip: {},
+  })
+
   return (
     <div
       className={cx(styles.cart, {
@@ -33,11 +39,17 @@ const Cart = () => {
         <div className={styles.headerBottom}>save 15% on orders over $40</div>
       </div>
       <div className={styles.scrollable}>
-        {checkout.lineItems.map((line_item: any) => (
-          <LineItem key={line_item.id.toString()} line_item={line_item} />
-        ))}
+        <PoseGroup>
+          {checkout.lineItems.map((line_item: any) => (
+            <Transition
+              key={line_item.id.toString()}
+              data-key={line_item.id.toString()}
+            >
+              <LineItem line_item={line_item} />
+            </Transition>
+          ))}
+        </PoseGroup>
       </div>
-      cart
     </div>
   )
 }

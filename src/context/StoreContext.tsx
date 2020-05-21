@@ -37,7 +37,7 @@ export const ContextProvider = ({ children }: ContextProviderProps) => {
     checkout: { lineItems: [] },
     products: [],
     shop: {},
-    cartOpen: true,
+    cartOpen: false,
   } as StoreStateProps
 
   const [store, updateStore] = useState(initialStoreState)
@@ -65,6 +65,7 @@ export const ContextProvider = ({ children }: ContextProviderProps) => {
       if (existingCheckoutID) {
         try {
           const checkout = await fetchCheckout(existingCheckoutID)
+          console.log(checkout)
 
           // Make sure this cart hasn’t already been purchased.
           if (!checkout.completedAt) {
@@ -98,6 +99,7 @@ export const ContextProvider = ({ children }: ContextProviderProps) => {
           const lineItemsToUpdate = [
             { variantId, quantity: parseInt(quantity, 10) },
           ] as any
+          console.log(store.client.checkout)
 
           return store.client.checkout
             .addLineItems(store.checkout.id, lineItemsToUpdate)
@@ -115,13 +117,13 @@ export const ContextProvider = ({ children }: ContextProviderProps) => {
             .then(res => {
               updateStore(prevState => ({ ...prevState, checkout: res }))
             }),
-        updateLineItem: (lineItemID: string, quantity: string) => {
+        updateLineItem: async (lineItemID: string, quantity: string) => {
           const lineItemsToUpdate = [
             { id: lineItemID, quantity: parseInt(quantity, 10) },
           ]
 
           return store.client.checkout
-            .updateLineItem(store.checkout.id, lineItemsToUpdate)
+            .updateLineItems(store.checkout.id, lineItemsToUpdate)
             .then(res => {
               updateStore(prevState => ({ ...prevState, checkout: res }))
             })
