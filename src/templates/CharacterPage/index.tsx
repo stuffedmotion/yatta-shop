@@ -4,7 +4,6 @@ import Image from 'gatsby-image'
 
 import SEO from '@components/seo'
 import { ShopifyCollection } from '@typings/storefront'
-import posed from 'react-pose'
 import { formatCollectionTitle } from '@utils/helpers'
 import ProductGrid from '@components/Product/ProductGrid'
 import styles from './styles.module.scss'
@@ -15,23 +14,6 @@ interface CharacterPageProps {
   }
 }
 
-const Transition = posed.div({
-  enter: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      y: { type: `spring`, stiffness: 400, damping: 15 },
-      opacity: { ease: `easeOut`, duration: 800 },
-      default: { duration: 300 },
-    },
-  },
-  exit: {
-    opacity: 0,
-    y: 40,
-    transition: { duration: 0 },
-  },
-})
-
 const CharacterPage = ({ data }: CharacterPageProps) => {
   const { description, image, products } = data.shopifyCollection
   const { title, subtitle } = formatCollectionTitle(
@@ -39,7 +21,7 @@ const CharacterPage = ({ data }: CharacterPageProps) => {
   )
 
   return (
-    <Transition>
+    <div>
       <SEO title={title} description={description} />
 
       <div className={styles.bioWrapper}>
@@ -63,7 +45,7 @@ const CharacterPage = ({ data }: CharacterPageProps) => {
       </div>
 
       <ProductGrid title="what's available" products={products} />
-    </Transition>
+    </div>
   )
 }
 

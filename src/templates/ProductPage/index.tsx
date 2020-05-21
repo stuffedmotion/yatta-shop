@@ -2,7 +2,6 @@ import cx from 'classnames'
 import { graphql, Link } from 'gatsby'
 import { AnimationConfig } from 'lottie-web'
 import Helmet from 'react-helmet'
-import posed from 'react-pose'
 import React, { useRef, useState, memo, useContext, useEffect } from 'react'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
@@ -24,23 +23,6 @@ interface ProductPageProps {
     shopifyProduct: ShopifyProduct
   }
 }
-
-const Transition = posed.div({
-  enter: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      y: { type: `spring`, stiffness: 400, damping: 15 },
-      opacity: { ease: `easeOut`, duration: 800 },
-      default: { duration: 300 },
-    },
-  },
-  exit: {
-    opacity: 0,
-    y: 40,
-    transition: { duration: 0 },
-  },
-})
 
 const ProductPage = ({ data }: ProductPageProps) => {
   const [selectedOptions, setSelectedOptions] = useState<{
@@ -141,7 +123,7 @@ const ProductPage = ({ data }: ProductPageProps) => {
   }
 
   return (
-    <Transition>
+    <div>
       <SEO title={product.title} description={product.description} />
       <div className={styles.productWrapper}>
         <div className="hideDesktop">{titleArea}</div>
@@ -178,7 +160,7 @@ const ProductPage = ({ data }: ProductPageProps) => {
         {/* <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }} /> */}
         {/* <ProductForm product={product} /> */}
       </div>
-    </Transition>
+    </div>
   )
 }
 

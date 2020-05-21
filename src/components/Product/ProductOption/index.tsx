@@ -10,8 +10,8 @@ import chip_xl from '@assets/images/chip_xl.svg'
 import line from '@assets/images/line.svg'
 import Draggable from 'react-draggable'
 import useDimensions from 'react-use-dimensions'
-import posed from 'react-pose'
 import styles from './styles.module.scss'
+import { motion } from 'framer-motion'
 
 interface ProductOptionProps {
   product: ShopifyProduct
@@ -47,21 +47,22 @@ const optionRenderer = (props: ProductOptionProps) => {
   }
 }
 
-const ChipMunk = posed.img({
+const variants = {
   bounce: {
     scale: 1,
     transition: {
-      scale: { type: 'spring', stiffness: 1000, damping: 15 },
-      default: { duration: 400 },
+      type: 'spring',
+      stiffness: 1000,
+      damping: 15,
     },
   },
   initial: {
     scale: 0.8,
     transition: {
-      default: { duration: 0 },
+      duration: 0,
     },
   },
-})
+}
 
 const SizeOption = (props: ProductOptionProps) => {
   const { option, handleUpdateOption, selectedOptions } = props
@@ -138,14 +139,13 @@ const SizeOption = (props: ProductOptionProps) => {
       </div>
       <div className={styles.sizeChipmunk}>
         {CHIPMUNKS.map(chip => (
-          <ChipMunk
-            initialPose="initial"
+          <motion.img
             key={chip}
-            pose={chip === currentChipmunk ? `bounce` : `initial`}
-            poseKey={chip}
             className={cx({ [styles.active]: chip === currentChipmunk })}
             alt=""
             src={chip}
+            animate={chip === currentChipmunk ? `bounce` : `initial`}
+            variants={variants}
           />
         ))}
       </div>

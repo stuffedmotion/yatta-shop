@@ -1,12 +1,12 @@
 import cx from 'classnames'
 import React, { useContext } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 import happy from '@assets/images/happy.svg'
 import close from '@assets/images/close.svg'
 import StoreContext from '@context/StoreContext'
 import LineItem from './LineItem'
 import styles from './styles.module.scss'
-import posed, { PoseGroup } from 'react-pose'
 
 const Cart = () => {
   const {
@@ -17,10 +17,6 @@ const Cart = () => {
   const handleCheckout = () => {
     window.location = checkout.webUrl
   }
-
-  const Transition = posed.div({
-    flip: {},
-  })
 
   return (
     <div
@@ -39,16 +35,19 @@ const Cart = () => {
         <div className={styles.headerBottom}>save 15% on orders over $40</div>
       </div>
       <div className={styles.scrollable}>
-        <PoseGroup>
+        <AnimatePresence>
           {checkout.lineItems.map((line_item: any) => (
-            <Transition
+            <motion.div
+              positionTransition
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0, x: -50 }}
               key={line_item.id.toString()}
-              data-key={line_item.id.toString()}
             >
               <LineItem line_item={line_item} />
-            </Transition>
+            </motion.div>
           ))}
-        </PoseGroup>
+        </AnimatePresence>
       </div>
     </div>
   )

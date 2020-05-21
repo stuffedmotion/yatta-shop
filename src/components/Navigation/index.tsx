@@ -5,7 +5,6 @@ import { Link } from 'gatsby'
 import reduce from 'lodash/reduce'
 import { AnimationConfig } from 'lottie-web'
 import React, { useContext, useState, useEffect } from 'react'
-import posed from 'react-pose'
 
 import cart from '@assets/images/cart.svg'
 import headerDesktopAnim from '@assets/lottie/header_desktop.json'
@@ -17,6 +16,7 @@ import Cart from '@components/Cart'
 import StoreContext from '@context/StoreContext'
 import useLottie from '@utils/useLottie'
 import styles from './styles.module.scss'
+import { AnimatePresence, motion } from 'framer-motion'
 
 const useQuantity = (): [boolean, number] => {
   const {
@@ -149,24 +149,6 @@ const CartButton = ({
   )
 }
 
-const Transition = posed.img({
-  visible: {
-    opacity: 1,
-    y: 0,
-    delay: 200,
-    transition: {
-      y: { type: 'spring', stiffness: 200, damping: 15 },
-      opacity: { ease: 'easeOut', duration: 300 },
-      default: { duration: 300 },
-    },
-  },
-  hidden: {
-    opacity: 0,
-    y: 200,
-    transition: { duration: 400 },
-  },
-})
-
 const MobileMenu = ({ isOpen }: { isOpen: boolean }) => (
   <div
     className={cx(styles.mobileMenu, {
@@ -176,12 +158,18 @@ const MobileMenu = ({ isOpen }: { isOpen: boolean }) => (
     <div className={styles.mobileMenuWrapper}>
       <Navigation className={styles.navigationMobile} />
     </div>
-    <Transition
-      pose={isOpen ? 'visible' : 'hidden'}
-      className={styles.whale}
-      src={whale}
-      alt="cute whale"
-    />
+    <AnimatePresence>
+      {isOpen && (
+        <motion.img
+          initial={{ opacity: 0, y: 200 }}
+          animate={{ opacity: 1, y: 0, transition: { delay: 0.2 } }}
+          exit={{ opacity: 0 }}
+          className={styles.whale}
+          src={whale}
+          alt="cute whale"
+        />
+      )}
+    </AnimatePresence>
   </div>
 )
 

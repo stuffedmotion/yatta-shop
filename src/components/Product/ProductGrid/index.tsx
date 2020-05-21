@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { ShopifyProductConnection, ShopifyProduct } from '@typings/storefront'
-import posed from 'react-pose'
 import { ProductCard } from '@components/Product/ProductCard'
 import styles from './styles.module.scss'
 
