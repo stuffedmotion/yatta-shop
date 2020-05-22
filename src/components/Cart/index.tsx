@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import { useStaticQuery } from 'gatsby'
+import { useStaticQuery, graphql } from 'gatsby'
 import React, { useContext } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -27,10 +27,10 @@ const Cart = () => {
   )
 
   const addonProducts = shopifyCollection.products.filter(product => {
-    const search = checkout.lineItems.find(
+    const inCart = checkout.lineItems.find(
       (item: any) => item.variant.product.id === product.shopifyId
     )
-    return !search
+    return !inCart
   })
 
   const handleCheckout = () => {
@@ -63,7 +63,7 @@ const Cart = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0, x: -50 }}
-                key={lineItem.id.toString()}
+                key={lineItem.id}
               >
                 <LineItem lineItem={lineItem} />
               </motion.div>
@@ -91,31 +91,5 @@ const Cart = () => {
     </div>
   )
 }
-
-// const Cart2 = () => {
-//   return (
-//     <div>
-//       {checkout.lineItems.map((line_item: any) => (
-//         <LineItem key={line_item.id.toString()} line_item={line_item} />
-//       ))}
-//       <h2>Subtotal</h2>
-//       <p>$ {checkout.subtotalPrice}</p>
-//       <br />
-//       <h2>Taxes</h2>
-//       <p>$ {checkout.totalTax}</p>
-//       <br />
-//       <h2>Total</h2>
-//       <p>$ {checkout.totalPrice}</p>
-//       <br />
-//       <button
-//         type="button"
-//         onClick={handleCheckout}
-//         disabled={checkout.lineItems.length === 0}
-//       >
-//         Check out
-//       </button>
-//     </div>
-//   )
-// }
 
 export default Cart

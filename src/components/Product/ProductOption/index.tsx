@@ -1,17 +1,19 @@
-import React, { useEffect, memo } from 'react'
 import cx from 'classnames'
-import { getMetafield } from '@utils/getMetafield'
-import { ShopifyProduct, ShopifyProductOption } from '@typings/storefront'
+import { motion } from 'framer-motion'
+import React, { useEffect, memo } from 'react'
+import Draggable from 'react-draggable'
+import useDimensions from 'react-use-dimensions'
+
 import acorn from '@assets/images/acorn.svg'
 import chip_xs from '@assets/images/chip_xs.svg'
 import chip_s from '@assets/images/chip_s.svg'
 import chip_m from '@assets/images/chip_m.svg'
 import chip_xl from '@assets/images/chip_xl.svg'
 import line from '@assets/images/line.svg'
-import Draggable from 'react-draggable'
-import useDimensions from 'react-use-dimensions'
+import { ShopifyProduct, ShopifyProductOption } from '@typings/storefront'
+import { getMetafield } from '@utils/getMetafield'
+
 import styles from './styles.module.scss'
-import { motion } from 'framer-motion'
 
 interface ProductOptionProps {
   product: ShopifyProduct
@@ -66,8 +68,9 @@ const variants = {
 
 const SizeOption = (props: ProductOptionProps) => {
   const { option, handleUpdateOption, selectedOptions } = props
-  const [ref, { width }] = useDimensions()
+  const [dimensionRef, { width }] = useDimensions()
 
+  // calculate constants
   const dragBasisLength = width - HANDLE_WIDTH
   const snapLength = Math.round(dragBasisLength / (option.values.length - 1))
   const snapPercent = snapLength / dragBasisLength
@@ -81,6 +84,7 @@ const SizeOption = (props: ProductOptionProps) => {
   const updateOption = (optionIndex: number) =>
     handleUpdateOption(option.name, option.values[optionIndex])
 
+  // interpolate which chipmunk to use (lerp)
   const currentChipmunkIndex = Math.round(
     0 +
       ((CHIPMUNKS.length - 1 - 0) * (currentOptionIndex - 0)) /
@@ -121,7 +125,7 @@ const SizeOption = (props: ProductOptionProps) => {
             </div>
           </div>
         </Draggable>
-        <div ref={ref} className={styles.sizeSliderTrack}>
+        <div ref={dimensionRef} className={styles.sizeSliderTrack}>
           {option.values.map((value, idx) => (
             <button
               aria-label={`Size ${value}`}

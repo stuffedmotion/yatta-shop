@@ -1,7 +1,7 @@
 import cx from 'classnames'
 import { useStaticQuery, graphql } from 'gatsby'
 import Image from 'gatsby-image'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, memo } from 'react'
 
 import minus from '@assets/images/minus.svg'
 import plus from '@assets/images/plus.svg'
@@ -15,7 +15,6 @@ interface LineItemProps {
   lineItem?: any
   addonProduct?: ShopifyProduct
 }
-
 const LineItem = (props: LineItemProps) => {
   const { lineItem, addonProduct } = props
 
@@ -38,7 +37,7 @@ const LineItem = (props: LineItemProps) => {
   const productId = lineItem?.variant?.product?.id || addonProduct?.shopifyId
   const variantId = lineItem?.variant?.id || addonProduct?.variants[0].shopifyId
 
-  // Derive both product and variant
+  // Derive product
   const productNode = allShopifyProduct.edges.find(
     ({ node }) => node.shopifyId === productId
   )
@@ -55,6 +54,7 @@ const LineItem = (props: LineItemProps) => {
 
   const { node: product } = productNode
 
+  // Derive variant
   const variant = product.variants.find(
     ({ shopifyId }) => shopifyId === variantId
   )
@@ -156,4 +156,4 @@ const LineItem = (props: LineItemProps) => {
   )
 }
 
-export default LineItem
+export default memo(LineItem)
