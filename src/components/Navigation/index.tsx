@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import cx from 'classnames'
+import { AnimatePresence, motion } from 'framer-motion'
 import { Link } from 'gatsby'
 import reduce from 'lodash/reduce'
 import { AnimationConfig } from 'lottie-web'
@@ -16,7 +17,6 @@ import Cart from '@components/Cart'
 import StoreContext from '@context/StoreContext'
 import useLottie from '@utils/useLottie'
 import styles from './styles.module.scss'
-import { AnimatePresence, motion } from 'framer-motion'
 
 const useQuantity = (): [boolean, number] => {
   const {
@@ -27,6 +27,7 @@ const useQuantity = (): [boolean, number] => {
   return [total !== 0, total]
 }
 
+// Lottie animation setup
 const headerDesktopConfig = {
   animationData: headerDesktopAnim,
   name: `headerDesktop`,
@@ -49,6 +50,7 @@ const Header = () => {
 
   const { openCart } = useContext(StoreContext)
 
+  // Lottie initialization
   const { Lottie: HeaderDesktopLottie } = useLottie(headerDesktopConfig, {
     className: styles.headerDesktopLottie,
   })
@@ -73,28 +75,32 @@ const Header = () => {
     }
   )
 
-  const toggleMobileMenu = () => {
+  // Toggle or force mobile menu to a specific state
+  const toggleMobileMenu = (isOpen?: boolean) => {
     setState(prevState => {
-      const { mobileOpen } = prevState
+      const { mobileOpen: prevMobileOpen } = prevState
 
-      animMobileMenu.setSpeed(2.5)
-      if (!mobileOpen) {
-        animMobileMenu.setDirection(1)
-        animMobileMenu.goToAndPlay(30, true)
-      } else {
-        animMobileMenu.setDirection(-1)
-        animMobileMenu.goToAndPlay(64, true)
+      const mobileOpen = isOpen !== undefined ? isOpen : !prevMobileOpen
+
+      if (prevMobileOpen || isOpen === undefined) {
+        animMobileMenu.setSpeed(2.5)
+        animMobileMenu.setDirection(mobileOpen ? 1 : -1)
+        animMobileMenu.goToAndPlay(mobileOpen ? 30 : 64, true)
       }
+
       return {
         ...prevState,
-        mobileOpen: !mobileOpen,
+        mobileOpen,
       }
     })
   }
 
   return (
     <>
-      <MobileMenu isOpen={state.mobileOpen} />
+      <MobileMenu
+        isOpen={state.mobileOpen}
+        toggleMobileMenu={toggleMobileMenu}
+      />
       <Cart />
       <div className={styles.header}>
         {HeaderDesktopLottie}
@@ -103,7 +109,11 @@ const Header = () => {
         <div className={styles.wrapper}>
           {MobileMenuLottie}
 
-          <Link className={styles.logo} to="/">
+          <Link
+            className={styles.logo}
+            to="/"
+            onClick={() => toggleMobileMenu(false)}
+          >
             <img alt="teehouse logo" src={logo} />
           </Link>
 
@@ -118,15 +128,25 @@ const Header = () => {
   )
 }
 
-const Navigation = ({ className }: { className: string }) => (
+const Navigation = ({
+  className,
+  toggleMobileMenu,
+}: {
+  className: string
+  toggleMobileMenu?: (isOpen?: boolean) => void
+}) => (
   <nav role="main" className={className}>
-    <Link activeClassName={styles.active} to="/product/salt/">
+    <Link
+      onClick={() => toggleMobileMenu(false)}
+      activeClassName={styles.active}
+      to="/"
+    >
       shop
     </Link>
-    <Link activeClassName={styles.active} to="/product/unicorn-t-shirt/">
+    <Link activeClassName={styles.active} to="/about">
       about
     </Link>
-    <Link activeClassName={styles.active} to="/">
+    <Link activeClassName={styles.active} to="/contact">
       contact
     </Link>
   </nav>
@@ -149,14 +169,23 @@ const CartButton = ({
   )
 }
 
-const MobileMenu = ({ isOpen }: { isOpen: boolean }) => (
+const MobileMenu = ({
+  isOpen,
+  toggleMobileMenu,
+}: {
+  isOpen: boolean
+  toggleMobileMenu?: (isOpen?: boolean) => void
+}) => (
   <div
     className={cx(styles.mobileMenu, {
       [styles.active]: isOpen,
     })}
   >
     <div className={styles.mobileMenuWrapper}>
-      <Navigation className={styles.navigationMobile} />
+      <Navigation
+        toggleMobileMenu={toggleMobileMenu}
+        className={styles.navigationMobile}
+      />
     </div>
     <AnimatePresence>
       {isOpen && (
