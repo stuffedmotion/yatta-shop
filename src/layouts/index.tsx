@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import cx from 'classnames'
 import React, { useContext } from 'react'
 import Helmet from 'react-helmet'
@@ -19,11 +21,6 @@ const Overlay = () => {
 
   return (
     <>
-      <Helmet
-        bodyAttributes={{
-          class: cartOpen ? styles.blockScroll : ``,
-        }}
-      />
       <div
         onClick={() => {
           if (cartOpen) closeCart()

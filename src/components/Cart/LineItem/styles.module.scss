@@ -26,6 +26,7 @@
 }
 
 .title {
+  display: block;
   margin-bottom: 0.6rem;
 }
 .variantTitle {
@@ -100,4 +101,8 @@
   padding: 1.3rem 1.5rem 0.8rem 1.5rem;
   text-shadow: 1px 2px #d14a81;
   width: auto;
+}
+
+.addonPrice {
+  font-weight: 400;
 }

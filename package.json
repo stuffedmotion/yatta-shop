@@ -11,6 +11,7 @@
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.22",
     "@welldone-software/why-did-you-render": "^4.2.1",
+    "body-scroll-lock": "^3.0.2",
     "classnames": "^2.2.6",
     "framer-motion": "^1.11.0",
     "gatsby": "^2.21.10",

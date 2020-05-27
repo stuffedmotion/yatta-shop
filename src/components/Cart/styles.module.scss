@@ -76,7 +76,8 @@
 }
 
 .lineItems,
-.addonItems {
+.addonItems,
+.footer {
   padding: 2rem 1.5rem;
 }
 
@@ -97,5 +98,67 @@
     border-bottom: none;
     margin-bottom: 0;
     padding-bottom: 1.5rem;
+  }
+}
+
+.footer {
+  background-color: #ea6194;
+  color: white;
+
+  * {
+    font-family: $font-heading;
+    font-size: 1.8rem;
+  }
+}
+
+.footerInfoRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+
+  .left {
+    font-weight: 400;
+  }
+
+  .right {
+    font-weight: 700;
+
+    span {
+      font-size: 1.5rem;
+      font-weight: 400;
+    }
+  }
+}
+
+.checkout {
+  align-items: center;
+  background-color: white;
+  border-radius: 1.2rem;
+  box-shadow: 3px 5px #dd5089;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 1.6rem 1rem;
+  transition: background-color 0.1s;
+  will-change: background-color;
+  width: 100%;
+
+  &:hover {
+    background-color: #fff3f7;
+  }
+
+  img {
+    height: 1.6rem;
+    margin-right: 1rem;
+    width: 1.6rem;
+  }
+
+  span {
+    color: #ea6194;
+    font-family: $font-heading;
+    font-size: 2rem;
+    font-weight: 500;
+    line-height: 1;
+    margin-top: 0.7rem;
   }
 }

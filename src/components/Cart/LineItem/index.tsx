@@ -1,5 +1,5 @@
 import cx from 'classnames'
-import { useStaticQuery, graphql } from 'gatsby'
+import { useStaticQuery, graphql, Link } from 'gatsby'
 import Image from 'gatsby-image'
 import React, { useContext, useState, memo } from 'react'
 
@@ -18,9 +18,12 @@ interface LineItemProps {
 const LineItem = (props: LineItemProps) => {
   const { lineItem, addonProduct } = props
 
-  const { updateLineItem, removeLineItem, addVariantToCart } = useContext(
-    StoreContext
-  )
+  const {
+    updateLineItem,
+    removeLineItem,
+    addVariantToCart,
+    closeCart,
+  } = useContext(StoreContext)
   const [isAdding, setIsAdding] = useState(false)
 
   const { allShopifyProduct }: Query = useStaticQuery(
@@ -75,12 +78,14 @@ const LineItem = (props: LineItemProps) => {
     product.images[0]
 
   const variantImage = (
-    <Image
-      className={styles.image}
-      fluid={image.localFile.childImageSharp.fluid}
-      key={image.id}
-      alt={product.title}
-    />
+    <Link onClick={closeCart} to={`/product/${product.handle}`}>
+      <Image
+        className={styles.image}
+        fluid={image.localFile.childImageSharp.fluid}
+        key={image.id}
+        alt={product.title}
+      />
+    </Link>
   )
 
   // Update quantity
@@ -133,14 +138,25 @@ const LineItem = (props: LineItemProps) => {
     <div className={styles.lineItem}>
       {variantImage}
       <div className={styles.details}>
-        <div className={styles.title}>{product.title}</div>
+        <Link
+          onClick={closeCart}
+          className={styles.title}
+          to={`/product/${product.handle}`}
+        >
+          {product.title}
+        </Link>
         {variant.title !== `Default Title` && (
           <div className={styles.variantTitle}>{variant.title}</div>
+        )}
+        {addonProduct && (
+          <div className={cx(styles.addonPrice)}>{getPrice(variant.price)}</div>
         )}
         {lineItem && <Quantity />}
       </div>
       {lineItem ? (
-        <div className={styles.price}>{getPrice(variant.price)}</div>
+        <div className={styles.price}>
+          {getPrice(`${parseFloat(variant.price) * lineItem.quantity}`)}
+        </div>
       ) : (
         <button
           onClick={() => addAddon()}
