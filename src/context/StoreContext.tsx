@@ -37,7 +37,7 @@ export const ContextProvider = ({ children }: ContextProviderProps) => {
     checkout: { lineItems: [] },
     products: [],
     shop: {},
-    cartOpen: true,
+    cartOpen: false,
   } as StoreStateProps
 
   const [store, updateStore] = useState(initialStoreState)
@@ -98,6 +98,12 @@ export const ContextProvider = ({ children }: ContextProviderProps) => {
           const lineItemsToUpdate = [
             { variantId, quantity: parseInt(quantity, 10) },
           ] as any
+
+          // TODO TEMP FIX FOR PREVIEW
+          updateStore(prevState => ({
+            ...prevState,
+            adding: false,
+          }))
 
           return store.client.checkout
             .addLineItems(store.checkout.id, lineItemsToUpdate)
