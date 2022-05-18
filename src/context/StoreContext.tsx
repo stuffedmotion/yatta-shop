@@ -37,7 +37,7 @@ export const ContextProvider = ({ children }: ContextProviderProps) => {
     checkout: { lineItems: [] },
     products: [],
     shop: {},
-    cartOpen: true,
+    cartOpen: false,
   } as StoreStateProps
 
   const [store, updateStore] = useState(initialStoreState)
